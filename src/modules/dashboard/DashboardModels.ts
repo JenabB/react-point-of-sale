@@ -8,8 +8,33 @@ export interface User {
   createdAt: string;
 }
 
+export interface Product {
+  productId: number;
+  shopId: number;
+  productName: string;
+  productPrice: number;
+}
+
+export interface InvoiceProduct {
+  invoiceProductId: number;
+  productName: string;
+  productPrice: number;
+  quantity: number;
+}
+
+export interface Invoice {
+  invoiceId: number;
+  invoiceCode: string;
+  totalPrice: number;
+  customerName: string;
+  createdAt: string;
+  products: Array<InvoiceProduct>;
+}
+
 export interface Dashboard {
   isLoading: boolean;
   user: User;
   shop: ShopModels.Shop | null;
+  products: Array<Product>;
+  invoices: Array<Invoice>;
 }

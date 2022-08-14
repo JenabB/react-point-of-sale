@@ -24,3 +24,17 @@ export const selectShop = createSelector(
     return root.shop;
   }
 );
+
+export const selectProducts = createSelector(
+  authRoot,
+  (root: DashboardModels.Dashboard): any => {
+    return root.products;
+  }
+);
+
+export const selectInvoices = createSelector(
+  authRoot,
+  (root: DashboardModels.Dashboard): any => {
+    return root.invoices;
+  }
+);

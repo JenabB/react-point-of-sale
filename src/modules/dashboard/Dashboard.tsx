@@ -6,7 +6,7 @@ import SideMenu from "./components/SideMenu";
 import { PageHeader } from "antd";
 import Header from "./components/Header";
 import DashboardContent from "./components/DashboardContent";
-import { Outlet, useParams } from "react-router-dom";
+import { Navigate, Outlet, useParams } from "react-router-dom";
 import { ShopActions } from "../shop";
 
 const Dashboard = () => {
@@ -20,9 +20,12 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(DashboardActions.getUser());
     dispatch(DashboardActions.getShopById(id));
+    dispatch(DashboardActions.getProducts(id));
   }, [dispatch, id]);
 
   if (isLoading) return <Loader show={true} />;
+
+  if (!shop) return <Navigate to="/shop" />;
 
   return (
     <div>

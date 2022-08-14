@@ -12,6 +12,8 @@ const initialState: DashboardModels.Dashboard = {
     createdAt: "",
   },
   shop: null,
+  products: [],
+  invoices: [],
 };
 
 const extraReducers = (

@@ -12,7 +12,9 @@ const matchers = (
     .addMatcher(
       isAnyOf(
         DashboardActions.getUser.pending,
-        DashboardActions.getShopById.pending
+        DashboardActions.getShopById.pending,
+        DashboardActions.getProducts.pending,
+        DashboardActions.getInvoices.pending
       ),
       (state, action) => {
         state.isLoading = true;
@@ -30,6 +32,20 @@ const matchers = (
       (state: any, action) => {
         state.isLoading = false;
         state.shop = action.payload;
+      }
+    )
+    .addMatcher(
+      isAnyOf(DashboardActions.getProducts.fulfilled),
+      (state: any, action) => {
+        state.isLoading = false;
+        state.products = action.payload;
+      }
+    )
+    .addMatcher(
+      isAnyOf(DashboardActions.getInvoices.fulfilled),
+      (state: any, action) => {
+        state.isLoading = false;
+        state.invoices = action.payload;
       }
     );
 };

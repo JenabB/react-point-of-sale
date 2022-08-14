@@ -38,3 +38,33 @@ export const getShopById = createAsyncThunk(
     }
   }
 );
+
+export const getProducts = createAsyncThunk(
+  "dashboard/getProducts",
+  async (shopId: string | undefined, { rejectWithValue }) => {
+    try {
+      const response = await axios
+        .get(`${HOST}/v1/shop/${shopId}/product`, config)
+        .then((res) => res.data.data);
+
+      return response;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const getInvoices = createAsyncThunk(
+  "dashboard/getInvoices",
+  async (shopId: string | undefined, { rejectWithValue }) => {
+    try {
+      const response = await axios
+        .get(`${HOST}/v1/shop/${shopId}/invoice`, config)
+        .then((res) => res.data.data);
+
+      return response;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);

@@ -5,7 +5,7 @@ import { useAppSelector } from "./common/state/hooks";
 import { DashboardSelectors, Dashboard } from "./modules/dashboard";
 import Ya from "./modules/dashboard/components/DashboardContent";
 import DashboardContent from "./modules/dashboard/components/DashboardContent";
-import Home from "./modules/dashboard/components/Home";
+import Home from "./modules/dashboard/components/home/Home";
 import Products from "./modules/dashboard/components/products/Products";
 import Shop from "./modules/shop/Shop";
 
