@@ -23,3 +23,18 @@ export const getUser = createAsyncThunk(
     }
   }
 );
+
+export const getShopById = createAsyncThunk(
+  "dashboard/getShopById",
+  async (shopId: string | undefined, { rejectWithValue }) => {
+    try {
+      const response = await axios
+        .get(`${HOST}/v1/shop/${shopId}`, config)
+        .then((res) => res.data.data);
+
+      return response;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);

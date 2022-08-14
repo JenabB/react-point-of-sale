@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "../../modules/auth";
 import { dashboardReducer } from "../../modules/dashboard";
+import { shopReducer } from "../../modules/shop";
 
 const configureAppStore = () => {
   return configureStore({
     reducer: {
       ...authReducer,
+      ...shopReducer,
       ...dashboardReducer,
     },
   });

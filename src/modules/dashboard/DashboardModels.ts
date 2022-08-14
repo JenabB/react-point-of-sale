@@ -1,3 +1,4 @@
+import { ShopModels } from "../shop";
 export interface User {
   email: string;
   fullName: string;
@@ -10,4 +11,5 @@ export interface User {
 export interface Dashboard {
   isLoading: boolean;
   user: User;
+  shop: ShopModels.Shop | null;
 }

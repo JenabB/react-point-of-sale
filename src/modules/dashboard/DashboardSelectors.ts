@@ -17,3 +17,10 @@ export const selectUserRoot = createSelector(
     return root.user;
   }
 );
+
+export const selectShop = createSelector(
+  authRoot,
+  (root: DashboardModels.Dashboard): any => {
+    return root.shop;
+  }
+);

@@ -25,13 +25,11 @@ const Register = () => {
     },
   });
 
-  console.log(login);
-
   useEffect(() => {
     if (login.status === 200) {
-      navigate("/dashboard");
+      navigate("/shop");
     }
-  }, [login.status, navigate]);
+  }, [login.status]);
 
   return (
     <>
