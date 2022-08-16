@@ -9,7 +9,7 @@ interface Props {
 
 const ShopItem: FC<Props> = (props) => {
   return (
-    <Link to={`/dashboard/${props.shop.shopId}`}>
+    <Link to={`/dashboard/${props.shop.shopId}/home`}>
       {" "}
       <Card
         title={props.shop.shopName}

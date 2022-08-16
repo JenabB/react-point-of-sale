@@ -13,8 +13,10 @@ const Shop = () => {
   const shops = useAppSelector(ShopSelectors.selectShopRoot);
 
   useEffect(() => {
-    dispatch(ShopActions.getOwnerShops());
-    dispatch(ShopActions.getCountries());
+    if (sessionStorage.getItem("pos-token")) {
+      dispatch(ShopActions.getOwnerShops());
+      dispatch(ShopActions.getCountries());
+    }
   }, [dispatch]);
 
   if (isLoading) return <ShopSkeleton />;

@@ -29,8 +29,10 @@ const ProductList: FC<Props> = (props) => {
       key: "action",
       render: (_: any, record: any) => (
         <Space size="middle">
-          <Button>Edit</Button>
-          <Button>Delete</Button>
+          <Button type="primary">Edit</Button>
+          <Button type="primary" danger>
+            Delete
+          </Button>
         </Space>
       ),
     },

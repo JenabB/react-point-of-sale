@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { count } from "console";
+import { count, log } from "console";
 
 const HOST = "https://svc-not-e.herokuapp.com";
 
@@ -60,8 +60,10 @@ export const getProvinces = createAsyncThunk(
   async (countryId: number, { rejectWithValue }) => {
     try {
       const response = await axios
-        .get(`${HOST}/province?countryId=${countryId}`)
+        .get(`${HOST}/v1/area/province?countryId=${countryId}`)
         .then((res) => res.data.data);
+
+      console.log(response, "province");
 
       return response;
     } catch (error) {
@@ -71,12 +73,45 @@ export const getProvinces = createAsyncThunk(
 );
 
 export const getRegencies = createAsyncThunk(
-  "shop/getCountries",
+  "shop/getRegencies",
   async (provinceId: number, { rejectWithValue }) => {
     try {
       const response = await axios
         .get(`${HOST}/v1/area/regency?provinceId=${provinceId}`)
         .then((res) => res.data.data);
+
+      return response;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
+interface SaveShopParams {
+  shopId?: string;
+  data: {
+    shopName: string;
+    countryId: number;
+    provinceId: number;
+    regencyId: number;
+    address: string;
+    contactNumber: string;
+  };
+}
+
+export const saveShop = createAsyncThunk(
+  "shop/saveShop",
+  async (params: SaveShopParams, { rejectWithValue }) => {
+    try {
+      const response = params.shopId
+        ? await axios
+            .put(`${HOST}/v1/shop/${params.shopId}`, params.data, config)
+            .then((res) => res.data.data)
+        : await axios
+            .post(`${HOST}/v1/shop`, params.data, config)
+            .then((res) => res.data.data);
+
+      console.log(response);
 
       return response;
     } catch (error) {

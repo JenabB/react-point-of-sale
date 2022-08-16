@@ -38,3 +38,10 @@ export const selectInvoices = createSelector(
     return root.invoices;
   }
 );
+
+export const selectInvoiceDetails = createSelector(
+  authRoot,
+  (root: DashboardModels.Dashboard): any => {
+    return root.invoiceDetails;
+  }
+);

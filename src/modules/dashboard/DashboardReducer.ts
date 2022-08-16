@@ -15,6 +15,7 @@ const matchers = (
         DashboardActions.getShopById.pending,
         DashboardActions.getProducts.pending,
         DashboardActions.getInvoices.pending
+        // DashboardActions.getInvoiceById.pending
       ),
       (state, action) => {
         state.isLoading = true;
@@ -46,6 +47,13 @@ const matchers = (
       (state: any, action) => {
         state.isLoading = false;
         state.invoices = action.payload;
+      }
+    )
+    .addMatcher(
+      isAnyOf(DashboardActions.getInvoiceById.fulfilled),
+      (state: any, action) => {
+        // state.isLoading = false;
+        state.invoiceDetails = action.payload;
       }
     );
 };

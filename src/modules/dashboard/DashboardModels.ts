@@ -28,7 +28,8 @@ export interface Invoice {
   totalPrice: number;
   customerName: string;
   createdAt: string;
-  products: Array<InvoiceProduct>;
+  products?: Array<InvoiceProduct>;
+  productInsertMode?: string | undefined;
 }
 
 export interface Dashboard {
@@ -37,4 +38,5 @@ export interface Dashboard {
   shop: ShopModels.Shop | null;
   products: Array<Product>;
   invoices: Array<Invoice>;
+  invoiceDetails: Invoice | null;
 }

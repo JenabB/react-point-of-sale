@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
-import { Button, Checkbox, Form, Input, Typography, Space } from "antd";
+import { Button, Checkbox, Form, Input, Typography, Space, Layout } from "antd";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
 import { AuthAction, AuthSelectors } from ".";
@@ -11,6 +11,8 @@ const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { Title } = Typography;
+
+  const { Content } = Layout;
 
   const isLoading = useAppSelector(AuthSelectors.selectRequestStatus);
   const login = useAppSelector(AuthSelectors.selectLoginRoot);
@@ -26,7 +28,7 @@ const Register = () => {
   });
 
   useEffect(() => {
-    if (login.status === 200) {
+    if (login.status === 200 && sessionStorage.getItem("pos-token")) {
       navigate("/shop");
     }
   }, [login.status]);
@@ -35,7 +37,7 @@ const Register = () => {
     <>
       <AlertMessage error={login.error} />
       <Loader show={isLoading} />
-      <div className="auth-form-container">
+      <Content className="auth-form-container">
         <Title level={5}>login to existing account</Title>
         <Form initialValues={{ remember: true }} onFinish={formik.handleSubmit}>
           <Form.Item
@@ -85,7 +87,7 @@ const Register = () => {
             </Space>
           </Form.Item>
         </Form>
-      </div>
+      </Content>
     </>
   );
 };

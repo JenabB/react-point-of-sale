@@ -16,7 +16,14 @@ code {
 }
 .auth-form-container {
   width: 50%;
+  background-color: white;
+  padding: 50px;
   margin: 50px auto;
+}
+
+.dashboard-content-item {
+  background-color: white;
+  padding: 50px;
 }
 
 .dashboard-container {

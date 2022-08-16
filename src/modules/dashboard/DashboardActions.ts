@@ -68,3 +68,26 @@ export const getInvoices = createAsyncThunk(
     }
   }
 );
+
+interface GetInvoiceParams {
+  shopId: number | undefined;
+  invoiceId: number | undefined;
+}
+
+export const getInvoiceById = createAsyncThunk(
+  "dashboard/getInvoiceById",
+  async (params: GetInvoiceParams, { rejectWithValue }) => {
+    try {
+      const response = await axios
+        .get(
+          `${HOST}/v1/shop/${params.shopId}/invoice/${params.invoiceId}`,
+          config
+        )
+        .then((res) => res.data.data);
+
+      return response;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);

@@ -7,10 +7,11 @@ const matchers = (builder: ActionReducerMapBuilder<ShopModels.ShopState>) => {
   builder
     .addMatcher(
       isAnyOf(
-        ShopActions.getOwnerShops.pending,
-        ShopActions.getCountries.pending,
-        ShopActions.getProvinces.pending,
-        ShopActions.getRegencies.pending
+        ShopActions.getOwnerShops.pending
+        // ShopActions.saveShop.pending
+        // ShopActions.getCountries.pending,
+        // ShopActions.getProvinces.pending,
+        // ShopActions.getRegencies.pending
       ),
       (state, action) => {
         state.isLoading = true;
@@ -40,7 +41,18 @@ const matchers = (builder: ActionReducerMapBuilder<ShopModels.ShopState>) => {
       (state, action) => {
         state.regencies = action.payload;
       }
-    );
+    )
+    .addMatcher(isAnyOf(ShopActions.saveShop.fulfilled), (state, action) => {
+      const shop = action.payload;
+      const isExist = state.shops.find((el: any) => el.shopId === shop.shopId);
+      const savedShop = state.shops.map((el: any) => {
+        if (el.shopId === shop.shopId) {
+          return shop;
+        }
+        return el;
+      });
+      state.shops = isExist ? savedShop : [...state.shops, shop];
+    });
 };
 
 const ShopReducer = { cases, matchers };

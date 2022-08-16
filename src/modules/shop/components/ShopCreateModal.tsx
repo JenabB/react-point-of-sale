@@ -1,10 +1,8 @@
-import { Button, Modal, Form, Input, Select } from "antd";
+import { Button, Modal, Form, Input, Select, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../common/state/hooks";
 import { ShopActions, ShopSelectors, ShopModels } from "../";
-import { Loader } from "../../../common/components";
-import { tuple } from "antd/es/_util/type";
 
 interface Props {
   isOpen: boolean;
@@ -14,6 +12,8 @@ interface Props {
 const ShopCreateModal: React.FC<Props> = (props) => {
   const [payload, setPayload] = useState(null);
   const dispatch = useAppDispatch();
+
+  const { TextArea } = Input;
 
   const isLoading = useAppSelector(ShopSelectors.selectRequestStatus);
   const countries: Array<ShopModels.Country> = useAppSelector(
@@ -54,11 +54,11 @@ const ShopCreateModal: React.FC<Props> = (props) => {
     }
   }, [dispatch, formik.values.provinceId]);
 
-  const handleOk = () => {};
+  const handleOk = () => {
+    dispatch(ShopActions.saveShop({ data: formik.values }));
+  };
 
-  console.log(formik.values);
-
-  if (isLoading) return <Loader show={true} />;
+  // if (isLoading) return <Loader show={true} />;
 
   return (
     <>
@@ -82,51 +82,78 @@ const ShopCreateModal: React.FC<Props> = (props) => {
               onChange={formik.handleChange}
             />
           </Form.Item>
-          <Form.Item>
-            <Select
-              style={{ width: "33.33%" }}
-              onChange={(e) => formik.setFieldValue("countryId", e)}
-            >
-              {countries.map((country, index) => (
-                <Option key={index} value={country.countryId}>
-                  {country.niceName}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          {formik.values.countryId !== 0 && !isLoading ? (
-            <Form.Item>
-              <Select
-                style={{ width: "33.33%" }}
-                onChange={(e) => formik.setFieldValue("provinceId", e)}
-              >
-                {provinces.map((provincy, index) => (
-                  <Option key={index} value={provincy.provinceId}>
-                    {provincy.provinceName}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          ) : (
-            ""
-          )}
+          <Row>
+            <Col span={8}>
+              <Form.Item>
+                <Select onChange={(e) => formik.setFieldValue("countryId", e)}>
+                  {countries.map((country, index) => (
+                    <Option key={index} value={country.countryId}>
+                      {country.niceName}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              {formik.values.countryId !== 0 && provinces ? (
+                <Form.Item>
+                  <Select
+                    onChange={(e) => formik.setFieldValue("provinceId", e)}
+                  >
+                    {provinces.map((provincy, index) => (
+                      <Option key={index} value={provincy.provinceId}>
+                        {provincy.provinceName}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              ) : (
+                ""
+              )}
+            </Col>
 
-          {formik.values.provinceId !== 0 && !isLoading ? (
-            <Form.Item>
-              <Select
-                style={{ width: "33.33%" }}
-                onChange={(e) => formik.setFieldValue("regencyId", e)}
-              >
-                {regencies.map((regency, index) => (
-                  <Option key={index} value={regency.regencyId}>
-                    {regency.regencyName}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          ) : (
-            ""
-          )}
+            <Col span={8}>
+              {formik.values.provinceId !== 0 && regencies ? (
+                <Form.Item>
+                  <Select
+                    onChange={(e) => formik.setFieldValue("regencyId", e)}
+                  >
+                    {regencies.map((regency, index) => (
+                      <Option key={index} value={regency.regencyId}>
+                        {regency.regencyName}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              ) : (
+                ""
+              )}
+            </Col>
+          </Row>
+          <Form.Item
+            name="contactNumber"
+            rules={[
+              { required: true, message: "Please input your contact number" },
+            ]}
+          >
+            <Input
+              placeholder="Contact Number"
+              name="contactNumber"
+              value={formik.values.contactNumber}
+              onChange={formik.handleChange}
+            />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            rules={[{ required: true, message: "Please input your address" }]}
+          >
+            <TextArea
+              rows={3}
+              placeholder="Address"
+              value={formik.values.address}
+              onChange={formik.handleChange}
+            />
+          </Form.Item>
         </Form>
       </Modal>
     </>
