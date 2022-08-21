@@ -26,7 +26,7 @@ const ShopList: FC<Props> = (props) => {
           />
         </Tooltip>
       </div>
-      <div className="shop-list">
+      <div style={{ marginBottom: "20px" }} className="shop-list">
         {props.shops.map((shop, index) => (
           <ShopItem shop={shop} key={index} />
         ))}

@@ -91,3 +91,91 @@ export const getInvoiceById = createAsyncThunk(
     }
   }
 );
+
+interface AddProductParams {
+  shopId: string | undefined;
+  data: {
+    productName: string;
+    productPrice: number;
+  };
+}
+
+export const addProduct = createAsyncThunk(
+  "dashboard/addProduct",
+  async (params: AddProductParams, { rejectWithValue }) => {
+    try {
+      const response = await axios
+        .post(`${HOST}/v1/shop/${params.shopId}/product`, params.data, config)
+        .then((res) => res.data);
+
+      return response;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  "dashboard/updateProduct",
+  async (params: AddProductParams, { rejectWithValue }) => {
+    try {
+      const response = await axios
+        .post(`${HOST}/v1/shop/${params.shopId}/product`, params.data, config)
+        .then((res) => res.data);
+
+      console.log(response, "ress");
+
+      return response;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
+interface DeleteProductParams {
+  shopId: string | undefined;
+  productId: string | number | undefined;
+}
+
+export const deleteProduct = createAsyncThunk(
+  "dashboard/deleteProduct",
+  async (params: DeleteProductParams, { rejectWithValue }) => {
+    try {
+      await axios
+        .delete(
+          `${HOST}/v1/shop/${params.shopId}/product/${params.productId}`,
+          config
+        )
+        .then((res) => res.data);
+
+      return params.productId;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
+interface AddInvoiceParams {
+  shopId: string;
+  data: {
+    invoiceCode: string;
+    productInsertMode: string;
+    customerName: string;
+    products: Array<any>;
+  };
+}
+
+export const addInvoice = createAsyncThunk(
+  "dashboard/addInvoice",
+  async (params: AddInvoiceParams, { rejectWithValue }) => {
+    try {
+      const response = await axios
+        .post(`${HOST}/v1/shop/${params.shopId}/invoice`, params.data, config)
+        .then((res) => res.data);
+
+      return response;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);

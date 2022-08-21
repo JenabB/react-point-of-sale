@@ -56,6 +56,7 @@ const ShopCreateModal: React.FC<Props> = (props) => {
 
   const handleOk = () => {
     dispatch(ShopActions.saveShop({ data: formik.values }));
+    props.onClose();
   };
 
   // if (isLoading) return <Loader show={true} />;

@@ -12,12 +12,14 @@ const Shop = () => {
   const isLoading = useAppSelector(ShopSelectors.selectRequestStatus);
   const shops = useAppSelector(ShopSelectors.selectShopRoot);
 
+  const token = sessionStorage.getItem("pos-token");
+
   useEffect(() => {
-    if (sessionStorage.getItem("pos-token")) {
+    if (token) {
       dispatch(ShopActions.getOwnerShops());
       dispatch(ShopActions.getCountries());
     }
-  }, [dispatch]);
+  }, [token]);
 
   if (isLoading) return <ShopSkeleton />;
 

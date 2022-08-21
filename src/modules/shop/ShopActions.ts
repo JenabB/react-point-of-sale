@@ -111,8 +111,6 @@ export const saveShop = createAsyncThunk(
             .post(`${HOST}/v1/shop`, params.data, config)
             .then((res) => res.data.data);
 
-      console.log(response);
-
       return response;
     } catch (error) {
       rejectWithValue(error);

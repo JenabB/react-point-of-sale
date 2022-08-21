@@ -13,6 +13,7 @@ export interface Product {
   shopId: number;
   productName: string;
   productPrice: number;
+  quantity?: number;
 }
 
 export interface InvoiceProduct {

@@ -23,11 +23,6 @@ const Products = () => {
     <div>
       {products ? (
         <div>
-          <div style={{ textAlign: "right" }}>
-            <Button style={{ marginBottom: 20 }} type="primary">
-              Add Product
-            </Button>
-          </div>
           <ProductList products={products} />
         </div>
       ) : (

@@ -55,6 +55,15 @@ const matchers = (
         // state.isLoading = false;
         state.invoiceDetails = action.payload;
       }
+    )
+    .addMatcher(
+      isAnyOf(DashboardActions.deleteProduct.fulfilled),
+      (state: any, action) => {
+        // state.isLoading = false;
+        state.products = state.products.filter(
+          (el: any) => el.productId !== action.payload
+        );
+      }
     );
 };
 
