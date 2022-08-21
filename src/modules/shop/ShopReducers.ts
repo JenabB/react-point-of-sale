@@ -1,5 +1,6 @@
 import { ActionReducerMapBuilder, isAnyOf } from "@reduxjs/toolkit";
 import { ShopActions, ShopModels } from ".";
+import { DashboardActions } from "../dashboard";
 
 const cases = (builder: ActionReducerMapBuilder<ShopModels.ShopState>) => {};
 
@@ -52,7 +53,15 @@ const matchers = (builder: ActionReducerMapBuilder<ShopModels.ShopState>) => {
         return el;
       });
       state.shops = isExist ? savedShop : [...state.shops, shop];
-    });
+    })
+    .addMatcher(
+      isAnyOf(DashboardActions.deleteShop.fulfilled),
+      (state: any, action) => {
+        state.shops = state.shops.filter(
+          (el: any) => el.shopId !== action.payload
+        );
+      }
+    );
 };
 
 const ShopReducer = { cases, matchers };

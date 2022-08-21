@@ -8,6 +8,7 @@ import Home from "./modules/dashboard/components/home/Home";
 import Products from "./modules/dashboard/components/products/Products";
 import Shop from "./modules/shop/Shop";
 import Invoices from "./modules/dashboard/components/invoices/Invoices";
+import { Settings } from "./modules/dashboard/components/settings";
 import jwtDecode from "jwt-decode";
 
 const App = () => {
@@ -25,14 +26,15 @@ const App = () => {
       <Routes>
         {/* {isExp ? <Navigate to="/" /> : <Navigate to="/dashboard" />} */}
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/dashboard/:id" element={<Dashboard />}>
           <Route path="home" element={<Home />} />
           <Route path="products" element={<Products />} />
           <Route path="invoices" element={<Invoices />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
       </Routes>
     </div>
   );

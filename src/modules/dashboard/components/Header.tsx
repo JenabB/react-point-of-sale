@@ -1,5 +1,13 @@
 import React, { FC } from "react";
-import { PageHeader, Avatar, Typography, Dropdown, Menu, Space } from "antd";
+import {
+  PageHeader,
+  Avatar,
+  Typography,
+  Dropdown,
+  Menu,
+  Space,
+  Button,
+} from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { ShopModels } from "../../shop";
 import { ShopSelectors } from "../../shop";
@@ -67,15 +75,18 @@ const Header: FC<Props> = (props) => {
         style={{ backgroundColor: "white" }}
         title="Dashboard"
         extra={[
-          <Dropdown overlay={menu}>
-            <a onClick={(e) => e.preventDefault()}>
+          <>
+            <Dropdown overlay={menu}>
               <Space>
                 <Typography>{props.shop.shopName}</Typography>
                 <Avatar>{props.shop.shopName.charAt(0).toUpperCase()}</Avatar>
                 <DownOutlined />
               </Space>
-            </a>
-          </Dropdown>,
+            </Dropdown>
+            <Link to="/shop">
+              <Button>Add Shop</Button>
+            </Link>
+          </>,
         ]}
       ></PageHeader>
     </div>

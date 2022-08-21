@@ -89,6 +89,14 @@ const SideMenu: React.FC = () => {
             </div>
           </Link>
         </Menu.Item>
+        <Menu.Item>
+          <Link to="settings">
+            <div className="side-menu-item">
+              <SettingOutlined style={{ marginRight: "10px" }} />
+              <Typography>Settings</Typography>
+            </div>
+          </Link>
+        </Menu.Item>
       </Menu>
     </>
   );

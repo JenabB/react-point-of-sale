@@ -179,3 +179,20 @@ export const addInvoice = createAsyncThunk(
     }
   }
 );
+
+interface DeleteShopParams {
+  shopId: string | undefined;
+}
+
+export const deleteShop = createAsyncThunk(
+  "dashboard/deleteShop",
+  async (params: DeleteShopParams, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${HOST}/v1/shop/${params.shopId}`, config);
+
+      return params.shopId;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
