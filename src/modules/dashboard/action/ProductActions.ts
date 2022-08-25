@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Action } from "history";
 
 const HOST = "https://svc-not-e.herokuapp.com";
 
@@ -24,27 +25,40 @@ export const getProducts = createAsyncThunk(
   }
 );
 
-interface AddProductParams {
+interface SaveProductParams {
   shopId: string | undefined;
+  productId?: string;
   data: {
     productName: string;
     productPrice: number;
   };
 }
 
-export const addProduct = createAsyncThunk(
+export const saveProduct = createAsyncThunk(
   "dashboard/addProduct",
-  async (params: AddProductParams, { rejectWithValue }) => {
-    const response = await axios
-      .post(`${HOST}/v1/shop/${params.shopId}/product`, params.data, config)
-      .then((res) => {
-        console.log(res, "res 2");
-        return res.data;
-      })
-      .catch((err) => {
-        console.log(err, "res error");
-        return err.response.data;
-      });
+  async (params: SaveProductParams, { rejectWithValue }) => {
+    const response = params.productId
+      ? await axios
+          .put(
+            `${HOST}/v1/shop/${params.shopId}/product/${params.productId}`,
+            params.data,
+            config
+          )
+          .then((res) => {
+            return { status: 200, productId: params.productId, ...params.data };
+          })
+          .catch((err) => {
+            return err.response.data;
+          })
+      : await axios
+          .post(`${HOST}/v1/shop/${params.shopId}/product`, params.data, config)
+          .then((res) => {
+            return res.data;
+          })
+          .catch((err) => {
+            console.log(err, "res error create");
+            return err.response.data;
+          });
 
     console.log(response, "res 3");
 
@@ -52,7 +66,7 @@ export const addProduct = createAsyncThunk(
       return rejectWithValue(response);
     }
 
-    return response;
+    return { status: response.status, data: response.data };
   }
 );
 

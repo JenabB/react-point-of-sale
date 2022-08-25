@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import DashboardContent from "./components/DashboardContent";
 import { Navigate, useParams } from "react-router-dom";
 import { ProductActions } from "./action";
+import { ShopActions } from "../shop";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -14,22 +15,24 @@ const Dashboard = () => {
   const { id } = useParams();
 
   // const isLoading = useAppSelector(DashboardSelectors.selectRequestStatus);
-  const shop = useAppSelector(DashboardSelectors.selectShop);
+  const { data } = useAppSelector(DashboardSelectors.selectShop);
+  const { isLoading } = useAppSelector(DashboardSelectors.selectShop);
 
   useEffect(() => {
     dispatch(DashboardActions.getUser());
     dispatch(DashboardActions.getShopById(id));
+    dispatch(ShopActions.getOwnerShops());
     dispatch(ProductActions.getProducts(id));
     dispatch(DashboardActions.getInvoices(id));
   }, [dispatch, id]);
 
-  // if (isLoading) return <Loader show={true} />;
+  if (isLoading || !data) return <Loader show={true} />;
 
-  if (!shop) return <Navigate to="/shop" />;
+  // if (!shop) return <Navigate to="/shop" />;
 
   return (
     <div>
-      <Header shop={shop} />
+      <Header shop={data} />
       <div className="dashboard-container">
         <SideMenu />
         <DashboardContent />

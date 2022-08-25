@@ -1,10 +1,11 @@
-import React from "react";
-import { useAppSelector } from "../../../../common/state/hooks";
-import { Typography, Card, Descriptions, Layout, Button, Tooltip } from "antd";
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
+import { Descriptions, Layout, Button, Tooltip } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { DashboardSelectors } from "../..";
 import { useState } from "react";
 import ShopCreateModal from "../../../shop/components/ShopCreateModal";
+import { AreaActions } from "../../action";
 
 const Home = () => {
   const [country, setCountry] = useState("");
@@ -12,20 +13,34 @@ const Home = () => {
   const [regency, setRegency] = useState("");
   const [editOpen, setEditOpen] = useState(false);
 
-  const [selectedShop, setSelectedShop] = useState(null);
+  const dispatch = useAppDispatch();
 
   const handleOpen = (shop: any) => {
-    setSelectedShop(shop);
     setEditOpen(true);
   };
 
   const handleClose = () => setEditOpen(false);
 
   const { Content } = Layout;
-  const shop = useAppSelector(DashboardSelectors.selectShop);
+  const { data } = useAppSelector(DashboardSelectors.selectShop);
+
+  useEffect(() => {
+    dispatch(
+      AreaActions.getAreaInformation({
+        countryId: data.countryId,
+        provinceId: data.provinceId,
+        regencyId: data.regencyId,
+      })
+    ).then((res: any) => {
+      setCountry(res.payload.country);
+      setProvince(res.payload.province);
+      setRegency(res.payload.regency);
+    });
+  }, [data.countryId, data.provinceId, data.regencyId, dispatch]);
+
   return (
     <>
-      <ShopCreateModal shop={shop} isOpen={editOpen} onClose={handleClose} />
+      <ShopCreateModal shop={data} isOpen={editOpen} onClose={handleClose} />
       <Content className="dashboard-content-item">
         <div style={{ textAlign: "right" }}>
           <Tooltip>
@@ -34,10 +49,10 @@ const Home = () => {
             </Button>
           </Tooltip>
         </div>
-        <Descriptions title={shop.shopName} layout="vertical">
-          <Descriptions.Item label="Address">{shop.address}</Descriptions.Item>
+        <Descriptions title={data.shopName} layout="vertical">
+          <Descriptions.Item label="Address">{data.address}</Descriptions.Item>
           <Descriptions.Item label="Contact Number">
-            {shop.contactNumber}
+            {data.contactNumber}
           </Descriptions.Item>
           <Descriptions.Item label="Country">{country}</Descriptions.Item>
           <Descriptions.Item label="Province">{province}</Descriptions.Item>

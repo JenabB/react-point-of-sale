@@ -26,15 +26,22 @@ const matchers = (
     .addMatcher(
       isAnyOf(DashboardActions.getUser.fulfilled),
       (state: any, action) => {
-        state.isLoading = false;
         state.user = action.payload;
       }
     )
+
+    .addMatcher(
+      isAnyOf(DashboardActions.getShopById.pending),
+      (state: any, action) => {
+        state.shop.isLoading = true;
+      }
+    )
+
     .addMatcher(
       isAnyOf(DashboardActions.getShopById.fulfilled),
       (state: any, action) => {
-        state.isLoading = false;
-        state.shop = action.payload;
+        state.shop.isLoading = false;
+        state.shop.data = action.payload;
       }
     )
     .addMatcher(
@@ -47,7 +54,6 @@ const matchers = (
     .addMatcher(
       isAnyOf(DashboardActions.getInvoices.fulfilled),
       (state: any, action) => {
-        state.isLoading = false;
         state.invoices = action.payload;
       }
     )
@@ -59,10 +65,9 @@ const matchers = (
       }
     )
     .addMatcher(
-      isAnyOf(ProductActions.addProduct.rejected),
+      isAnyOf(ProductActions.saveProduct.rejected),
       (state: any, action) => {
         // state.isLoading = false;
-        // const payload = action.payload;
         state.products = {
           data: state.products.data,
           ...(action.payload as {}),

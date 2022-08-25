@@ -13,6 +13,7 @@ interface Props {
 
 const ProductFormModal: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
+  console.log(props.product);
 
   // const products = useAppSelector(Dashboard.sele)
 
@@ -30,13 +31,14 @@ const ProductFormModal: React.FC<Props> = (props) => {
   const handleOk = () => {
     props.product
       ? dispatch(
-          ProductActions.addProduct({
+          ProductActions.saveProduct({
             shopId: id,
+            productId: props.product.key,
             data: formik.values,
           })
         )
       : dispatch(
-          ProductActions.addProduct({
+          ProductActions.saveProduct({
             shopId: id,
             data: formik.values,
           })
