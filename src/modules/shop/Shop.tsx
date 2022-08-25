@@ -9,7 +9,6 @@ import EmptyShop from "./components/EmptyShop";
 const Shop = () => {
   const dispatch = useAppDispatch();
 
-  const isLoading = useAppSelector(ShopSelectors.selectRequestStatus);
   const shops = useAppSelector(ShopSelectors.selectShopRoot);
 
   const token = sessionStorage.getItem("pos-token");
@@ -19,13 +18,13 @@ const Shop = () => {
       dispatch(ShopActions.getOwnerShops());
       dispatch(ShopActions.getCountries());
     }
-  }, [token]);
+  }, [token, dispatch]);
 
-  if (isLoading) return <ShopSkeleton />;
+  if (shops.isLoading) return <ShopSkeleton />;
 
   return (
     <div className="shop-container">
-      {shops ? <ShopList shops={shops} /> : <EmptyShop />}
+      {shops.data ? <ShopList shops={shops.data} /> : <EmptyShop />}
     </div>
   );
 };

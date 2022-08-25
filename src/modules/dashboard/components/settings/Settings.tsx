@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal, Space, Typography } from "antd";
 import { useAppDispatch } from "../../../../common/state/hooks";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { DashboardActions } from "../..";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const Settings = () => {
   const { confirm } = Modal;
@@ -28,13 +28,21 @@ const Settings = () => {
   };
 
   return (
-    <div className="dashboard-content-item">
-      <div>
-        <Button type="primary" onClick={showConfirm} danger>
-          Delete Shop
-        </Button>
+    <>
+      <div className="dashboard-content-item">
+        <Space direction="vertical">
+          {/* <Link to="">
+          <Typography>Upd</Typography>
+        </Link> */}
+          <Link to="">
+            <Typography>Reset Password</Typography>
+          </Link>
+          <Button type="primary" onClick={showConfirm} danger>
+            Delete Shop
+          </Button>
+        </Space>
       </div>
-    </div>
+    </>
   );
 };
 

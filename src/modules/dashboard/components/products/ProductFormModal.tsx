@@ -1,10 +1,9 @@
 import React from "react";
-import { Modal, Form, Input, InputNumber } from "antd";
-import { ShopModels } from "../../../shop";
-import { DashboardModels, DashboardActions } from "../..";
-import { Formik, useFormik } from "formik";
+import { Modal, Input, InputNumber } from "antd";
+import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { useParams } from "react-router-dom";
+import { ProductActions } from "../../action";
 
 interface Props {
   product: any;
@@ -15,29 +14,29 @@ interface Props {
 const ProductFormModal: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
 
+  // const products = useAppSelector(Dashboard.sele)
+
   const { id } = useParams();
-  console.log(props.product);
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       productName: props.product?.name || "",
       productPrice: props.product?.price || "",
     },
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: (values) => {},
   });
 
   const handleOk = () => {
     props.product
       ? dispatch(
-          DashboardActions.addProduct({
+          ProductActions.addProduct({
             shopId: id,
             data: formik.values,
           })
         )
       : dispatch(
-          DashboardActions.addProduct({
+          ProductActions.addProduct({
             shopId: id,
             data: formik.values,
           })

@@ -1,3 +1,36 @@
+export interface RequestModel {
+  isLoading: boolean;
+  timestamp: string;
+  status: number;
+  error: boolean;
+  message?: string;
+}
+
+export interface RequestableItem<T> extends RequestModel {
+  data?: T;
+}
+
+export interface RequestableList<T> extends RequestModel {
+  data: Array<T>;
+}
+
+export const getDefaultRequestableItem = <T>(): RequestableItem<T> => ({
+  isLoading: false,
+  timestamp: "",
+  status: 0,
+  error: false,
+  message: "",
+});
+
+export const getDefaultRequestableList = <T>(): RequestableList<T> => ({
+  isLoading: false,
+  timestamp: "",
+  status: 0,
+  error: false,
+  message: "",
+  data: [],
+});
+
 export interface Country {
   countryId: number;
   iso: string;
@@ -40,9 +73,15 @@ export interface Shop {
 }
 
 export interface ShopState {
-  isLoading: boolean;
   countries: Array<Country>;
   provinces: Array<Province>;
   regencies: Array<Regency>;
-  shops: Array<Shop>;
+  shops: RequestableList<Shop>;
 }
+
+export const getDefaultShop = (): ShopState => ({
+  countries: [],
+  provinces: [],
+  regencies: [],
+  shops: getDefaultRequestableList<Shop>(),
+});

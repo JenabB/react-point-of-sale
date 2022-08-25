@@ -6,23 +6,14 @@ const cases = (builder: ActionReducerMapBuilder<ShopModels.ShopState>) => {};
 
 const matchers = (builder: ActionReducerMapBuilder<ShopModels.ShopState>) => {
   builder
-    .addMatcher(
-      isAnyOf(
-        ShopActions.getOwnerShops.pending
-        // ShopActions.saveShop.pending
-        // ShopActions.getCountries.pending,
-        // ShopActions.getProvinces.pending,
-        // ShopActions.getRegencies.pending
-      ),
-      (state, action) => {
-        state.isLoading = true;
-      }
-    )
+    .addMatcher(isAnyOf(ShopActions.getOwnerShops.pending), (state, action) => {
+      state.shops.isLoading = true;
+    })
     .addMatcher(
       isAnyOf(ShopActions.getOwnerShops.fulfilled),
       (state: any, action) => {
-        state.isLoading = false;
-        state.shops = action.payload;
+        state.shops.isLoading = false;
+        state.shops.data = action.payload;
       }
     )
     .addMatcher(
@@ -45,19 +36,21 @@ const matchers = (builder: ActionReducerMapBuilder<ShopModels.ShopState>) => {
     )
     .addMatcher(isAnyOf(ShopActions.saveShop.fulfilled), (state, action) => {
       const shop = action.payload;
-      const isExist = state.shops.find((el: any) => el.shopId === shop.shopId);
-      const savedShop = state.shops.map((el: any) => {
+      const isExist = state.shops.data.find(
+        (el: any) => el.shopId === shop.shopId
+      );
+      const savedShop = state.shops.data.map((el: any) => {
         if (el.shopId === shop.shopId) {
           return shop;
         }
         return el;
       });
-      state.shops = isExist ? savedShop : [...state.shops, shop];
+      state.shops.data = isExist ? savedShop : [...state.shops.data, shop];
     })
     .addMatcher(
       isAnyOf(DashboardActions.deleteShop.fulfilled),
       (state: any, action) => {
-        state.shops = state.shops.filter(
+        state.shops = state.shops.data.filter(
           (el: any) => el.shopId !== action.payload
         );
       }

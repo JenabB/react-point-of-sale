@@ -3,13 +3,6 @@ import { createSelector } from "@reduxjs/toolkit";
 
 export const shopRoot = (state: any): ShopModels.ShopState => state.shop;
 
-export const selectRequestStatus = createSelector(
-  shopRoot,
-  (root: ShopModels.ShopState): any => {
-    return root.isLoading;
-  }
-);
-
 export const selectShopRoot = createSelector(
   shopRoot,
   (root: ShopModels.ShopState): any => {

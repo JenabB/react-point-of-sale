@@ -10,8 +10,8 @@ import { Button, Space } from "antd";
 const Products = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const isLoading = useAppSelector(DashboardSelectors.selectRequestStatus);
-  const products = useAppSelector(DashboardSelectors.selectProducts);
+  // const isLoading = useAppSelector(DashboardSelectors.selectRequestStatus);
+  const { data } = useAppSelector(DashboardSelectors.selectProducts);
 
   // useEffect(() => {
   //   dispatch(DashboardActions.getProducts(id));
@@ -21,9 +21,9 @@ const Products = () => {
 
   return (
     <div>
-      {products ? (
+      {data ? (
         <div>
-          <ProductList products={products} />
+          <ProductList products={data} />
         </div>
       ) : (
         <EmptyProduct />

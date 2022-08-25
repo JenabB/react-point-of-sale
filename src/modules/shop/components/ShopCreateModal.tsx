@@ -1,11 +1,13 @@
-import { Button, Modal, Form, Input, Select, Col, Row } from "antd";
+import { Button, Modal, Space, Input, Select, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../common/state/hooks";
 import { ShopActions, ShopSelectors, ShopModels } from "../";
+import Shop from "../Shop";
 
 interface Props {
   isOpen: boolean;
+  shop?: any;
   onClose: () => void;
 }
 
@@ -15,7 +17,6 @@ const ShopCreateModal: React.FC<Props> = (props) => {
 
   const { TextArea } = Input;
 
-  const isLoading = useAppSelector(ShopSelectors.selectRequestStatus);
   const countries: Array<ShopModels.Country> = useAppSelector(
     ShopSelectors.selectCountries
   );
@@ -29,17 +30,16 @@ const ShopCreateModal: React.FC<Props> = (props) => {
   const { Option } = Select;
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      shopName: "",
-      countryId: 0,
-      provinceId: 0,
-      regencyId: 0,
-      address: "",
-      contactNumber: "",
+      shopName: props.shop?.shopName || "",
+      countryId: props.shop?.countryId || 0,
+      provinceId: props.shop?.provinceId || 0,
+      regencyId: props.shop?.regencyId || 0,
+      address: props.shop?.address || "",
+      contactNumber: props.shop?.contactNumber || "",
     },
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: (values) => {},
   });
 
   useEffect(() => {
@@ -55,7 +55,18 @@ const ShopCreateModal: React.FC<Props> = (props) => {
   }, [dispatch, formik.values.provinceId]);
 
   const handleOk = () => {
-    dispatch(ShopActions.saveShop({ data: formik.values }));
+    props.shop
+      ? dispatch(
+          ShopActions.saveShop({
+            shopId: props.shop.shopId,
+            data: formik.values,
+          })
+        )
+      : dispatch(
+          ShopActions.saveShop({
+            data: formik.values,
+          })
+        );
     props.onClose();
   };
 
@@ -64,41 +75,42 @@ const ShopCreateModal: React.FC<Props> = (props) => {
   return (
     <>
       <Modal
-        title="Create Shop"
+        title={props.shop ? "Edit Shop Information" : "Create Shop"}
         visible={props.isOpen}
         onOk={handleOk}
         onCancel={props.onClose}
       >
-        <Form initialValues={{ remember: true }} onFinish={formik.handleSubmit}>
-          <Form.Item
-            name="shopName"
-            rules={[
-              { required: true, message: "Please input your shop name!" },
-            ]}
-          >
+        <form onSubmit={formik.handleSubmit}>
+          <div style={{ margin: "20px 0" }}>
             <Input
               placeholder="Shop name"
               name="shopName"
               value={formik.values.shopName}
               onChange={formik.handleChange}
             />
-          </Form.Item>
-          <Row>
+          </div>
+          <Row style={{ margin: "20px 0" }}>
             <Col span={8}>
-              <Form.Item>
-                <Select onChange={(e) => formik.setFieldValue("countryId", e)}>
+              <div style={{ margin: "0px 5px" }}>
+                <Select
+                  defaultValue={formik.values.countryId}
+                  style={{ width: "100%" }}
+                  onChange={(e) => formik.setFieldValue("countryId", e)}
+                >
                   {countries.map((country, index) => (
                     <Option key={index} value={country.countryId}>
                       {country.niceName}
                     </Option>
                   ))}
                 </Select>
-              </Form.Item>
+              </div>
             </Col>
             <Col span={8}>
               {formik.values.countryId !== 0 && provinces ? (
-                <Form.Item>
+                <div>
                   <Select
+                    defaultValue={formik.values.provinceId}
+                    style={{ width: "100%" }}
                     onChange={(e) => formik.setFieldValue("provinceId", e)}
                   >
                     {provinces.map((provincy, index) => (
@@ -107,7 +119,7 @@ const ShopCreateModal: React.FC<Props> = (props) => {
                       </Option>
                     ))}
                   </Select>
-                </Form.Item>
+                </div>
               ) : (
                 ""
               )}
@@ -115,8 +127,10 @@ const ShopCreateModal: React.FC<Props> = (props) => {
 
             <Col span={8}>
               {formik.values.provinceId !== 0 && regencies ? (
-                <Form.Item>
+                <div style={{ margin: "0px 5px" }}>
                   <Select
+                    style={{ width: "100%" }}
+                    defaultValue={formik.values.regencyId}
                     onChange={(e) => formik.setFieldValue("regencyId", e)}
                   >
                     {regencies.map((regency, index) => (
@@ -125,37 +139,30 @@ const ShopCreateModal: React.FC<Props> = (props) => {
                       </Option>
                     ))}
                   </Select>
-                </Form.Item>
+                </div>
               ) : (
                 ""
               )}
             </Col>
           </Row>
-          <Form.Item
-            name="contactNumber"
-            rules={[
-              { required: true, message: "Please input your contact number" },
-            ]}
-          >
+          <div style={{ margin: "20px 0" }}>
             <Input
               placeholder="Contact Number"
               name="contactNumber"
               value={formik.values.contactNumber}
               onChange={formik.handleChange}
             />
-          </Form.Item>
-          <Form.Item
-            name="address"
-            rules={[{ required: true, message: "Please input your address" }]}
-          >
+          </div>
+          <div style={{ margin: "20px 0" }}>
             <TextArea
               rows={3}
+              name="address"
               placeholder="Address"
               value={formik.values.address}
               onChange={formik.handleChange}
             />
-          </Form.Item>
-        </Form>
+          </div>
+        </form>
       </Modal>
     </>
   );

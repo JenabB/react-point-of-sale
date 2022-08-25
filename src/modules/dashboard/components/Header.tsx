@@ -19,7 +19,7 @@ interface Props {
 }
 
 const Header: FC<Props> = (props) => {
-  const shops: Array<ShopModels.Shop> = useAppSelector(
+  const { data }: { data: Array<ShopModels.Shop> } = useAppSelector(
     ShopSelectors.selectShopRoot
   );
 
@@ -28,7 +28,7 @@ const Header: FC<Props> = (props) => {
   const menu = (
     <Menu
       style={{ maxHeight: "400px", overflowY: "scroll" }}
-      items={shops
+      items={data
         .filter((shop) => shop.shopId !== props.shop.shopId)
         .map((item: any) => ({
           key: item.shopId,
@@ -43,32 +43,6 @@ const Header: FC<Props> = (props) => {
     />
   );
 
-  // const menu = (
-  //   <Menu
-  //     items={[
-  //       {
-  //         key: "1",
-  //         label: (
-  //           <div className="dropdown-menu">
-  //             <Typography>Second Shop</Typography>
-  //             <Avatar>S</Avatar>
-  //           </div>
-  //         ),
-  //       },
-  //       {
-  //         key: "2",
-  //         label: (
-  //           <div className="dropdown-menu">
-  //             <Typography>Third Shop</Typography>
-  //             <Avatar>T</Avatar>
-  //           </div>
-  //         ),
-  //       },
-  //     ]}
-  //   />
-  // );
-
-  console.log(shops);
   return (
     <div>
       <PageHeader

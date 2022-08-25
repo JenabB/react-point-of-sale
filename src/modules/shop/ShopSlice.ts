@@ -1,13 +1,7 @@
 import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
 import { ShopModels, ShopReducer } from ".";
 
-const initialState: ShopModels.ShopState = {
-  isLoading: false,
-  countries: [],
-  provinces: [],
-  regencies: [],
-  shops: [],
-};
+const initialState: ShopModels.ShopState = ShopModels.getDefaultShop();
 
 const extraReducers = (
   builder: ActionReducerMapBuilder<ShopModels.ShopState>

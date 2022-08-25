@@ -1,5 +1,7 @@
 import { ActionReducerMapBuilder, isAnyOf } from "@reduxjs/toolkit";
 import { DashboardActions, DashboardModels } from ".";
+import { ProductActions } from "./action";
+import { ShopActions } from "../shop";
 
 const cases = (
   builder: ActionReducerMapBuilder<DashboardModels.Dashboard>
@@ -9,18 +11,18 @@ const matchers = (
   builder: ActionReducerMapBuilder<DashboardModels.Dashboard>
 ) => {
   builder
-    .addMatcher(
-      isAnyOf(
-        DashboardActions.getUser.pending,
-        DashboardActions.getShopById.pending,
-        DashboardActions.getProducts.pending,
-        DashboardActions.getInvoices.pending
-        // DashboardActions.getInvoiceById.pending
-      ),
-      (state, action) => {
-        state.isLoading = true;
-      }
-    )
+    // .addMatcher(
+    //   isAnyOf(
+    //     DashboardActions.getUser.pending,
+    //     DashboardActions.getShopById.pending,
+    //     ProductActions.getProducts.pending,
+    //     DashboardActions.getInvoices.pending
+    //     // DashboardActions.getInvoiceById.pending
+    //   ),
+    //   (state, action) => {
+    //     state.isLoading = true;
+    //   }
+    // )
     .addMatcher(
       isAnyOf(DashboardActions.getUser.fulfilled),
       (state: any, action) => {
@@ -36,10 +38,10 @@ const matchers = (
       }
     )
     .addMatcher(
-      isAnyOf(DashboardActions.getProducts.fulfilled),
+      isAnyOf(ProductActions.getProducts.fulfilled),
       (state: any, action) => {
-        state.isLoading = false;
-        state.products = action.payload;
+        // state.isLoading = false;
+        state.products.data = action.payload;
       }
     )
     .addMatcher(
@@ -57,10 +59,25 @@ const matchers = (
       }
     )
     .addMatcher(
-      isAnyOf(DashboardActions.deleteProduct.fulfilled),
+      isAnyOf(ProductActions.addProduct.rejected),
       (state: any, action) => {
         // state.isLoading = false;
-        state.products = state.products.filter(
+        // const payload = action.payload;
+        state.products = {
+          data: state.products.data,
+          ...(action.payload as {}),
+        };
+      }
+    )
+    .addMatcher(isAnyOf(ShopActions.saveShop.fulfilled), (state, action) => {
+      // state.isLoading = false;
+      state.shop = action.payload;
+    })
+    .addMatcher(
+      isAnyOf(ProductActions.deleteProduct.fulfilled),
+      (state: any, action) => {
+        // state.isLoading = false;
+        state.products.data = state.products.data.filter(
           (el: any) => el.productId !== action.payload
         );
       }

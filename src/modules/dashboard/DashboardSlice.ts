@@ -1,21 +1,8 @@
 import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
 import { DashboardModels, DashboardReducer } from ".";
 
-const initialState: DashboardModels.Dashboard = {
-  isLoading: false,
-  user: {
-    fullName: "",
-    contactNumber: "",
-    email: "",
-    address: "",
-    userType: "",
-    createdAt: "",
-  },
-  shop: null,
-  products: [],
-  invoices: [],
-  invoiceDetails: null,
-};
+const initialState: DashboardModels.Dashboard =
+  DashboardModels.getDefaultDashboard();
 
 const extraReducers = (
   builder: ActionReducerMapBuilder<DashboardModels.Dashboard>

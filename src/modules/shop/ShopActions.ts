@@ -1,3 +1,4 @@
+import { ShopFilled } from "@ant-design/icons";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { count, log } from "console";
@@ -33,6 +34,8 @@ export const getOwnerShops = createAsyncThunk(
         .get(`${HOST}/v1/shop`, config)
         .then((res) => res.data.data);
 
+      console.log(response, "get");
+
       return response;
     } catch (error) {
       rejectWithValue(error);
@@ -63,8 +66,6 @@ export const getProvinces = createAsyncThunk(
         .get(`${HOST}/v1/area/province?countryId=${countryId}`)
         .then((res) => res.data.data);
 
-      console.log(response, "province");
-
       return response;
     } catch (error) {
       rejectWithValue(error);
@@ -88,7 +89,7 @@ export const getRegencies = createAsyncThunk(
 );
 
 interface SaveShopParams {
-  shopId?: string;
+  shopId?: string | undefined;
   data: {
     shopName: string;
     countryId: number;
@@ -106,7 +107,9 @@ export const saveShop = createAsyncThunk(
       const response = params.shopId
         ? await axios
             .put(`${HOST}/v1/shop/${params.shopId}`, params.data, config)
-            .then((res) => res.data.data)
+            .then((res) => {
+              return { shopId: params.shopId, ...params.data };
+            })
         : await axios
             .post(`${HOST}/v1/shop`, params.data, config)
             .then((res) => res.data.data);

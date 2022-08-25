@@ -12,10 +12,12 @@ interface Props {
 const ShopList: FC<Props> = (props) => {
   const [isCreate, setIsCreate] = useState(false);
 
-  const handleCreateClick = () => setIsCreate(!isCreate);
+  const handleCreateClick = () => setIsCreate(true);
+
+  const handleClose = () => setIsCreate(false);
   return (
     <div>
-      <ShopCreateModal isOpen={isCreate} onClose={handleCreateClick} />
+      <ShopCreateModal shop={null} isOpen={isCreate} onClose={handleClose} />
       <div style={{ textAlign: "center", margin: "20px 0" }}>
         <Tooltip title="add">
           <Button

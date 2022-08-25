@@ -1,4 +1,39 @@
+import { Dashboard } from ".";
 import { ShopModels } from "../shop";
+
+export interface RequestModel {
+  isLoading: boolean;
+  timestamp: string;
+  status: number;
+  error: boolean;
+  message?: string;
+}
+
+export interface RequestableItem<T> extends RequestModel {
+  data?: T;
+}
+
+export interface RequestableList<T> extends RequestModel {
+  data: Array<T>;
+}
+
+export const getDefaultRequestableItem = <T>(): RequestableItem<T> => ({
+  isLoading: false,
+  timestamp: "",
+  status: 0,
+  error: false,
+  message: "",
+});
+
+export const getDefaultRequestableList = <T>(): RequestableList<T> => ({
+  isLoading: false,
+  timestamp: "",
+  status: 0,
+  error: false,
+  message: "",
+  data: [],
+});
+
 export interface User {
   email: string;
   fullName: string;
@@ -34,10 +69,17 @@ export interface Invoice {
 }
 
 export interface Dashboard {
-  isLoading: boolean;
-  user: User;
+  user: User | null;
   shop: ShopModels.Shop | null;
-  products: Array<Product>;
-  invoices: Array<Invoice>;
+  products: RequestableList<Product>;
+  invoices: RequestableList<Invoice>;
   invoiceDetails: Invoice | null;
 }
+
+export const getDefaultDashboard = (): Dashboard => ({
+  user: null,
+  shop: null,
+  products: getDefaultRequestableList<Product>(),
+  invoices: getDefaultRequestableList<Invoice>(),
+  invoiceDetails: null,
+});
