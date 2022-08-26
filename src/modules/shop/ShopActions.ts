@@ -1,7 +1,6 @@
 import { ShopFilled } from "@ant-design/icons";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { count, log } from "console";
 
 const HOST = "https://svc-not-e.herokuapp.com";
 
@@ -33,8 +32,6 @@ export const getOwnerShops = createAsyncThunk(
       const response = await axios
         .get(`${HOST}/v1/shop`, config)
         .then((res) => res.data.data);
-
-      console.log(response, "get");
 
       return response;
     } catch (error) {

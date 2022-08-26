@@ -26,11 +26,9 @@ const InvoiceFormModal: FC<Props> = (props) => {
 
   const { shopId } = useAppSelector(DashboardSelectors.selectShop);
   const invoice = useAppSelector(DashboardSelectors.selectInvoiceDetails);
-  const products: Array<DashboardModels.Product> = useAppSelector(
-    DashboardSelectors.selectProducts
-  );
+  const { data } = useAppSelector(DashboardSelectors.selectProducts);
 
-  const prod = products.map((el: any) => {
+  const prod = data.map((el: any) => {
     return { ...el, quantity: 0 };
   });
 

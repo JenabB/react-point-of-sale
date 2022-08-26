@@ -7,13 +7,9 @@ import EmptyInvoice from "./EmptyInvoice";
 const Invoices = () => {
   const dispatch = useAppDispatch();
 
-  const invoices = useAppSelector(DashboardSelectors.selectInvoices);
+  const { data } = useAppSelector(DashboardSelectors.selectInvoices);
 
-  return (
-    <div>
-      {invoices ? <InvoiceList invoices={invoices} /> : <EmptyInvoice />}
-    </div>
-  );
+  return <div>{data ? <InvoiceList invoices={data} /> : <EmptyInvoice />}</div>;
 };
 
 export default Invoices;

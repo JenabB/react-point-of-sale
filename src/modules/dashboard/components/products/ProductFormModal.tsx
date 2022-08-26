@@ -1,9 +1,10 @@
-import React from "react";
-import { Modal, Input, InputNumber } from "antd";
+import React, { useEffect } from "react";
+import { Modal, Input, InputNumber, Alert } from "antd";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { useParams } from "react-router-dom";
 import { ProductActions } from "../../action";
+import { DashboardSelectors } from "../..";
 
 interface Props {
   product: any;
@@ -13,9 +14,8 @@ interface Props {
 
 const ProductFormModal: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
-  console.log(props.product);
 
-  // const products = useAppSelector(Dashboard.sele)
+  const products = useAppSelector(DashboardSelectors.selectProducts);
 
   const { id } = useParams();
 
@@ -45,8 +45,6 @@ const ProductFormModal: React.FC<Props> = (props) => {
         );
     props.onClose();
   };
-
-  console.log(formik.values);
 
   return (
     <Modal

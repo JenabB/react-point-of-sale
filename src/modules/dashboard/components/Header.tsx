@@ -43,8 +43,6 @@ const Header: FC<Props> = (props) => {
     />
   );
 
-  console.log(data);
-
   return (
     <div>
       <PageHeader

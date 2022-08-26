@@ -50,9 +50,7 @@ const items: MenuProps["items"] = [
 
 const SideMenu: React.FC = () => {
   // const match = useMatch();
-  const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
-  };
+  const onClick: MenuProps["onClick"] = (e) => {};
 
   return (
     <>

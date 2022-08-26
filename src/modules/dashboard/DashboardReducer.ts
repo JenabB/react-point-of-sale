@@ -1,28 +1,18 @@
 import { ActionReducerMapBuilder, isAnyOf } from "@reduxjs/toolkit";
 import { DashboardActions, DashboardModels } from ".";
 import { ProductActions } from "./action";
-import { ShopActions } from "../shop";
+import { ShopActions, shopReducer } from "../shop";
 
-const cases = (
-  builder: ActionReducerMapBuilder<DashboardModels.Dashboard>
-) => {};
+const cases = (builder: ActionReducerMapBuilder<DashboardModels.Dashboard>) => {
+  builder.addCase(ProductActions.clearError409, (state: any, action) => {
+    state.products.status = action.payload;
+  });
+};
 
 const matchers = (
   builder: ActionReducerMapBuilder<DashboardModels.Dashboard>
 ) => {
   builder
-    // .addMatcher(
-    //   isAnyOf(
-    //     DashboardActions.getUser.pending,
-    //     DashboardActions.getShopById.pending,
-    //     ProductActions.getProducts.pending,
-    //     DashboardActions.getInvoices.pending
-    //     // DashboardActions.getInvoiceById.pending
-    //   ),
-    //   (state, action) => {
-    //     state.isLoading = true;
-    //   }
-    // )
     .addMatcher(
       isAnyOf(DashboardActions.getUser.fulfilled),
       (state: any, action) => {
@@ -54,7 +44,7 @@ const matchers = (
     .addMatcher(
       isAnyOf(DashboardActions.getInvoices.fulfilled),
       (state: any, action) => {
-        state.invoices = action.payload;
+        state.invoices.data = action.payload;
       }
     )
     .addMatcher(
@@ -72,6 +62,28 @@ const matchers = (
           data: state.products.data,
           ...(action.payload as {}),
         };
+      }
+    )
+    .addMatcher(
+      isAnyOf(ProductActions.saveProduct.fulfilled),
+      (state: any, action) => {
+        state.products.isLoading = false;
+        state.product.status = action.payload.status;
+        const product = action.payload.data;
+        const isExist = state.products.data.find(
+          (el: any) => el.productId === product.productId
+        );
+
+        const savedProduct = state.products.data.map((el: any) => {
+          if (el.productId === product.productId) {
+            return product;
+          }
+          return el;
+        });
+
+        state.products.data = isExist
+          ? savedProduct
+          : [...state.products.data, product];
       }
     )
     .addMatcher(isAnyOf(ShopActions.saveShop.fulfilled), (state, action) => {

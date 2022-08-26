@@ -1,6 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Action } from "history";
 
 const HOST = "https://svc-not-e.herokuapp.com";
 
@@ -9,6 +8,14 @@ const token = sessionStorage.getItem("pos-token");
 const config = {
   headers: { Authorization: `Bearer ${token}` },
 };
+
+export const clearError409 = createAction("dashboard/clearError409", () => {
+  return {
+    payload: {
+      status: 0,
+    },
+  };
+});
 
 export const getProducts = createAsyncThunk(
   "dashboard/getProducts",
@@ -35,7 +42,7 @@ interface SaveProductParams {
 }
 
 export const saveProduct = createAsyncThunk(
-  "dashboard/addProduct",
+  "dashboard/saveProduct",
   async (params: SaveProductParams, { rejectWithValue }) => {
     const response = params.productId
       ? await axios
@@ -45,7 +52,10 @@ export const saveProduct = createAsyncThunk(
             config
           )
           .then((res) => {
-            return { status: 200, productId: params.productId, ...params.data };
+            return {
+              status: 200,
+              data: { productId: params.productId, ...params.data },
+            };
           })
           .catch((err) => {
             return err.response.data;
@@ -56,11 +66,8 @@ export const saveProduct = createAsyncThunk(
             return res.data;
           })
           .catch((err) => {
-            console.log(err, "res error create");
             return err.response.data;
           });
-
-    console.log(response, "res 3");
 
     if (response.status === 409) {
       return rejectWithValue(response);

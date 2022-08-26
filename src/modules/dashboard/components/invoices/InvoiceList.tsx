@@ -91,7 +91,6 @@ const InvoiceList: FC<Props> = (props) => {
     productInsertMode: invoice.productInsertMode,
   }));
 
-  console.log({ props, data });
   return (
     <div>
       <InvoiceDetail

@@ -3,12 +3,6 @@ import axios from "axios";
 
 const HOST = "https://svc-not-e.herokuapp.com";
 
-const token = sessionStorage.getItem("pos-token");
-
-const config = {
-  headers: { Authorization: `Bearer ${token}` },
-};
-
 interface GetAreaParams {
   countryId: number;
   provinceId: number;
@@ -30,8 +24,6 @@ export const getAreaInformation = createAsyncThunk(
       const getRegency = await axios
         .get(`${HOST}/v1/area/regency/${params.regencyId}`)
         .then((res) => res.data.data);
-
-      console.log({ getCountry, getProvince, getRegency });
 
       return {
         country: getCountry.niceName,
