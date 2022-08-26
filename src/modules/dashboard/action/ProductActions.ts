@@ -77,34 +77,6 @@ export const saveProduct = createAsyncThunk(
   }
 );
 
-interface UpdateProductParams {
-  shopId: string | undefined;
-  data: {
-    productId: string | undefined;
-    productName: string;
-    productPrice: number;
-  };
-}
-
-export const updateProduct = createAsyncThunk(
-  "dashboard/updateProduct",
-  async (params: UpdateProductParams, { rejectWithValue }) => {
-    try {
-      const response = await axios
-        .post(
-          `${HOST}/v1/shop/${params.shopId}/product/${params.data.productId}`,
-          params.data,
-          config
-        )
-        .then((res) => res.data);
-
-      return response;
-    } catch (error) {
-      rejectWithValue(error);
-    }
-  }
-);
-
 interface DeleteProductParams {
   shopId: string | undefined;
   productId: string | undefined;

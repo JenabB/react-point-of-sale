@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
-import { DashboardActions, DashboardSelectors } from "../..";
-import ProductSkeleton from "./ProductSkeleton";
+import { DashboardSelectors } from "../..";
 import EmptyProduct from "./EmptyProduct";
 import ProductList from "./ProductList";
-import { useParams } from "react-router-dom";
-import { Button, Space, Alert } from "antd";
+import { Alert } from "antd";
 import { ProductActions } from "../../action";
 
 const Products = () => {
   const [isError, setIsError] = useState(false);
   const dispatch = useAppDispatch();
-  const { id } = useParams();
-  // const isLoading = useAppSelector(DashboardSelectors.selectRequestStatus);
   const { data, status } = useAppSelector(DashboardSelectors.selectProducts);
-
-  // useEffect(() => {
-  //   dispatch(DashboardActions.getProducts(id));
-  // }, [id, dispatch]);
-
-  // if (isLoading) return <ProductSkeleton />;
 
   const handleClose = () => {
     setIsError(false);
@@ -32,14 +22,13 @@ const Products = () => {
     }
   }, [status]);
 
-  console.log(status, isError);
-
   return (
     <div>
       {isError && (
         <Alert
-          message="Error Text"
-          description="Error Description Error Description Error Description Error Description Error Description Error Description"
+          style={{ marginBottom: "20px" }}
+          message="Product Already Exists"
+          description="Please insert another product name"
           type="error"
           closable
           onClose={handleClose}

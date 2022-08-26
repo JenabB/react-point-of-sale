@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder, isAnyOf } from "@reduxjs/toolkit";
 import { DashboardActions, DashboardModels } from ".";
 import { ProductActions } from "./action";
-import { ShopActions, shopReducer } from "../shop";
+import { ShopActions } from "../shop";
 
 const cases = (builder: ActionReducerMapBuilder<DashboardModels.Dashboard>) => {
   builder.addCase(ProductActions.clearError409, (state: any, action) => {
@@ -68,7 +68,7 @@ const matchers = (
       isAnyOf(ProductActions.saveProduct.fulfilled),
       (state: any, action) => {
         state.products.isLoading = false;
-        state.product.status = action.payload.status;
+        state.products.status = action.payload.status;
         const product = action.payload.data;
         const isExist = state.products.data.find(
           (el: any) => el.productId === product.productId
