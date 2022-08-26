@@ -1,12 +1,12 @@
 import React, { FC, useState, useRef } from "react";
-import { Space, Table, Tag, Button, Input, Popconfirm } from "antd";
+import { Space, Table, Button, Input, Popconfirm } from "antd";
 import type { InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { FilterConfirmProps } from "antd/lib/table/interface";
-import { DashboardActions, DashboardModels } from "../../";
+import { DashboardModels } from "../../";
 import ProductFormModal from "./ProductFormModal";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
+import { useAppDispatch } from "../../../../common/state/hooks";
 import { ProductActions } from "../../action";
 import Highlighter from "react-highlight-words";
 
@@ -31,7 +31,6 @@ const ProductList: FC<Props> = (props) => {
   const [isOpen, setIOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] =
     useState<DashboardModels.Product | null>(null);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const data: DataType[] = props.products.map((product, index) => ({
     no: index + 1,
@@ -39,17 +38,6 @@ const ProductList: FC<Props> = (props) => {
     name: product.productName,
     price: product.productPrice,
   }));
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const hasSelected = selectedRowKeys.length > 0;
 
   const { id } = useParams();
 
@@ -183,8 +171,16 @@ const ProductList: FC<Props> = (props) => {
       dataIndex: "name",
       key: "name",
       ...getColumnSearchProps("name"),
+      sorter: (a: any, b: any) => a.name.length - b.name.length,
+      sortDirections: ["descend", "ascend"],
     },
-    { title: "Price", dataIndex: "price", key: "price" },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      sorter: (a: any, b: any) => a.price - b.price,
+      sortDirections: ["descend", "ascend"],
+    },
     {
       title: "Action",
       key: "action",
