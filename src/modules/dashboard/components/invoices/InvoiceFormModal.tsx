@@ -12,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { DashboardActions, DashboardSelectors, DashboardModels } from "../../";
 import { useFormik } from "formik";
+import { InvoiceActions } from "../../action";
 
 interface Props {
   invoice: DashboardModels.Invoice | null;
@@ -47,10 +48,18 @@ const InvoiceFormModal: FC<Props> = (props) => {
 
   const handleSearch = () => {};
 
+  const handleOk = () => {
+    const productSelected = formik.values.products.filter(
+      (el: any) => el.quantity !== 0
+    );
+
+    console.log(productSelected);
+  };
+
   useEffect(() => {
     if (props.invoice?.invoiceId) {
       dispatch(
-        DashboardActions.getInvoiceById({
+        InvoiceActions.getInvoiceById({
           shopId,
           invoiceId: props.invoice?.invoiceId,
         })
@@ -63,7 +72,7 @@ const InvoiceFormModal: FC<Props> = (props) => {
       // style={{max}}
       title={invoice ? "Update Invoice" : "Create Invoice"}
       visible={props.isOpen}
-      //   onOk={handleOk}
+      onOk={handleOk}
       onCancel={props.onClose}
     >
       <form>

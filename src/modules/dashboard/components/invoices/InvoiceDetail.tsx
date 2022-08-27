@@ -3,6 +3,7 @@ import { format } from "fecha";
 import { Button, Modal, Typography, Descriptions } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { DashboardActions, DashboardSelectors, DashboardModels } from "../../";
+import { InvoiceActions } from "../../action";
 
 interface Props {
   invoice: DashboardModels.Invoice | null;
@@ -19,7 +20,7 @@ const InvoiceDetail: FC<Props> = (props) => {
   useEffect(() => {
     if (props.invoice?.invoiceId) {
       dispatch(
-        DashboardActions.getInvoiceById({
+        InvoiceActions.getInvoiceById({
           shopId,
           invoiceId: props.invoice?.invoiceId,
         })

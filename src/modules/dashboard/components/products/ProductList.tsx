@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../../common/state/hooks";
 import { ProductActions } from "../../action";
 import Highlighter from "react-highlight-words";
+import { formatCurrency } from "../../../../common/utils";
 
 interface Props {
   products: Array<DashboardModels.Product>;
@@ -165,7 +166,6 @@ const ProductList: FC<Props> = (props) => {
 
   const columns: any = [
     { title: "No", dataIndex: "no", key: "no" },
-    { title: "Id", dataIndex: "key", key: "key" },
     {
       title: "Name",
       dataIndex: "name",
@@ -177,7 +177,8 @@ const ProductList: FC<Props> = (props) => {
     {
       title: "Price",
       dataIndex: "price",
-      key: "price",
+      key: `price`,
+      render: (price: number) => formatCurrency(price),
       sorter: (a: any, b: any) => a.price - b.price,
       sortDirections: ["descend", "ascend"],
     },

@@ -5,6 +5,7 @@ import { DashboardModels } from "../../";
 import { format } from "fecha";
 import InvoiceDetail from "./InvoiceDetail";
 import InvoiceFormModal from "./InvoiceFormModal";
+import { formatCurrency } from "../../../../common/utils";
 
 interface Props {
   invoices: Array<DashboardModels.Invoice>;
@@ -55,7 +56,12 @@ const InvoiceList: FC<Props> = (props) => {
       dataIndex: "customerName",
       key: "customerName",
     },
-    { title: "Total Price", dataIndex: "totalPrice", key: "totalPrice" },
+    {
+      title: "Total Price",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
+      render: (price: number) => formatCurrency(price),
+    },
     { title: "Created At", dataIndex: "createdAt", key: "createdAt" },
     {
       title: "Insert Mode",

@@ -40,6 +40,7 @@ const ProductFormModal: React.FC<Props> = (props) => {
             data: formik.values,
           })
         );
+    formik.resetForm();
     props.onClose();
   };
 
@@ -49,6 +50,7 @@ const ProductFormModal: React.FC<Props> = (props) => {
       visible={props.isOpen}
       onOk={handleOk}
       onCancel={props.onClose}
+      okButtonProps={{ disabled: Boolean(formik.values.productPrice < 0) }}
     >
       <form onSubmit={formik.handleSubmit}>
         <Input

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { DashboardSelectors } from "../..";
 import EmptyProduct from "./EmptyProduct";
 import ProductList from "./ProductList";
-import { Alert } from "antd";
 import { ProductActions } from "../../action";
 
 const Products = () => {
