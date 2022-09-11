@@ -46,7 +46,12 @@ const Header: FC<Props> = (props) => {
   return (
     <div>
       <PageHeader
-        style={{ backgroundColor: "white" }}
+        style={{
+          backgroundColor: "white",
+          position: "sticky",
+          top: 0,
+          zIndex: "999",
+        }}
         title="Dashboard"
         extra={[
           <>

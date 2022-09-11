@@ -1,7 +1,11 @@
 @import "~antd/dist/antd.css";
 
+html {
+  height: 300px;
+}
 body {
   margin: 0;
+  height: 300px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -59,6 +63,13 @@ code {
 .shop-list {
   display: grid;
   grid-template-columns: auto auto auto;
+}
+
+.home-badge {
+  padding: 5px 12px 5px 12px;
+  border-radius: 20px;
+  background-color: #40a9ff;
+  display: inline-block;
 }
 
 @media only screen and (max-width: 600px) {

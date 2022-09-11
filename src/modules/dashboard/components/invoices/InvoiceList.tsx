@@ -24,6 +24,8 @@ const InvoiceList: FC<Props> = (props) => {
   const [isDetail, setIsDetail] = useState(false);
   const [isForm, setIsForm] = useState(false);
 
+  console.log(props.invoices, "invoices");
+
   const handleDetail = (invoice: any) => {
     setSelectedInvoice(invoice);
     setIsDetail(true);
@@ -55,6 +57,12 @@ const InvoiceList: FC<Props> = (props) => {
       dataIndex: "customerName",
       key: "customerName",
     },
+    // {
+    //   title: "Total Product",
+    //   dataIndex: "totalPrice",
+    //   key: "totalPrice",
+    //   render: (price: number) => formatCurrency(price),
+    // },
     {
       title: "Total Price",
       dataIndex: "totalPrice",

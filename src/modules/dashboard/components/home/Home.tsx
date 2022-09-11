@@ -8,12 +8,16 @@ import {
   Avatar,
   Card,
   Typography,
+  Divider,
+  Badge,
 } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { DashboardSelectors } from "../..";
 import { useState } from "react";
 import ShopCreateModal from "../../../shop/components/ShopCreateModal";
 import { AreaActions } from "../../action";
+import InvoiceInfo from "./InvoiceInfo";
+import ProductInfo from "./ProductInfo";
 
 const Home = () => {
   const [country, setCountry] = useState("");
@@ -30,6 +34,7 @@ const Home = () => {
   const handleClose = () => setEditOpen(false);
 
   const { Content } = Layout;
+  const { Title } = Typography;
   const { data } = useAppSelector(DashboardSelectors.selectShop);
 
   useEffect(() => {
@@ -49,25 +54,30 @@ const Home = () => {
   return (
     <>
       <ShopCreateModal shop={data} isOpen={editOpen} onClose={handleClose} />
-      <Content className="dashboard-content-item">
-        <div style={{ textAlign: "right" }}>
-          <Tooltip>
-            <Button onClick={handleOpen} type="primary" icon={<EditOutlined />}>
-              Edit Shop
-            </Button>
-          </Tooltip>
-        </div>
-        <div>
-          <Typography>{data.shopName}</Typography>
-          <Typography>{data.address}</Typography>
-          <Typography>{data.contactNumber}</Typography>
-          <div>
-            <Typography>Country: {country}</Typography>
-            <Typography>Province: {province}</Typography>
-            <Typography>Regency: {regency}</Typography>
+      <div>
+        <Content className="dashboard-content-item">
+          <div style={{ textAlign: "right" }}>
+            <Tooltip>
+              <Button
+                onClick={handleOpen}
+                type="primary"
+                icon={<EditOutlined />}
+              >
+                Edit Shop
+              </Button>
+            </Tooltip>
           </div>
-        </div>
-        {/* <Descriptions title={data.shopName} layout="vertical">
+          <div>
+            <Typography>{data.shopName}</Typography>
+            <Typography>{data.address}</Typography>
+            <Typography>{data.contactNumber}</Typography>
+            <div>
+              <Typography>Country: {country}</Typography>
+              <Typography>Province: {province}</Typography>
+              <Typography>Regency: {regency}</Typography>
+            </div>
+          </div>
+          {/* <Descriptions title={data.shopName} layout="vertical">
           <Descriptions.Item label="Address">{data.address}</Descriptions.Item>
           <Descriptions.Item label="Contact Number">
             {data.contactNumber}
@@ -76,7 +86,30 @@ const Home = () => {
           <Descriptions.Item label="Province">{province}</Descriptions.Item>
           <Descriptions.Item label="Regency">{regency}</Descriptions.Item>
         </Descriptions> */}
-      </Content>
+        </Content>
+        <div style={{ margin: "20px 0" }}>
+          <Typography.Title
+            className="home-badge"
+            style={{ color: "white" }}
+            level={5}
+          >
+            Product
+          </Typography.Title>
+          <Divider style={{ backgroundColor: "white", height: 2 }} />
+          <ProductInfo />
+        </div>
+        <div style={{ margin: "20 0" }}>
+          <Typography.Title
+            className="home-badge"
+            style={{ color: "white" }}
+            level={5}
+          >
+            Invoice
+          </Typography.Title>
+          <Divider style={{ backgroundColor: "white", height: 2 }} />
+          <InvoiceInfo />
+        </div>
+      </div>
     </>
   );
 };

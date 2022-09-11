@@ -70,7 +70,7 @@ const InvoiceFormModal: FC<Props> = (props) => {
       InvoiceActions.addInvoice({
         shopId: id,
         data: {
-          invoiceCode: "INV0035",
+          invoiceCode: "INV0040",
           productInsertMode: formik.values.productInsertMode,
           customerName: formik.values.customerName,
           products: productFinal,
