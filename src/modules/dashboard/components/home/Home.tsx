@@ -1,6 +1,14 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
-import { Descriptions, Layout, Button, Tooltip } from "antd";
+import {
+  Descriptions,
+  Layout,
+  Button,
+  Tooltip,
+  Avatar,
+  Card,
+  Typography,
+} from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { DashboardSelectors } from "../..";
 import { useState } from "react";
@@ -49,7 +57,17 @@ const Home = () => {
             </Button>
           </Tooltip>
         </div>
-        <Descriptions title={data.shopName} layout="vertical">
+        <div>
+          <Typography>{data.shopName}</Typography>
+          <Typography>{data.address}</Typography>
+          <Typography>{data.contactNumber}</Typography>
+          <div>
+            <Typography>Country: {country}</Typography>
+            <Typography>Province: {province}</Typography>
+            <Typography>Regency: {regency}</Typography>
+          </div>
+        </div>
+        {/* <Descriptions title={data.shopName} layout="vertical">
           <Descriptions.Item label="Address">{data.address}</Descriptions.Item>
           <Descriptions.Item label="Contact Number">
             {data.contactNumber}
@@ -57,7 +75,7 @@ const Home = () => {
           <Descriptions.Item label="Country">{country}</Descriptions.Item>
           <Descriptions.Item label="Province">{province}</Descriptions.Item>
           <Descriptions.Item label="Regency">{regency}</Descriptions.Item>
-        </Descriptions>
+        </Descriptions> */}
       </Content>
     </>
   );

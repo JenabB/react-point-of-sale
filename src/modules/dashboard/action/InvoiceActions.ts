@@ -33,7 +33,7 @@ export const getInvoices = createAsyncThunk(
 );
 
 interface GetInvoiceParams {
-  shopId: number | undefined;
+  shopId: number | string | undefined;
   invoiceId: number | undefined;
 }
 
@@ -56,7 +56,7 @@ export const getInvoiceById = createAsyncThunk(
 );
 
 interface AddInvoiceParams {
-  shopId: string;
+  shopId: string | number | undefined;
   data: {
     invoiceCode: string;
     productInsertMode: string;

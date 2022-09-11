@@ -18,13 +18,17 @@ const Shop = () => {
       dispatch(ShopActions.getOwnerShops());
       dispatch(ShopActions.getCountries());
     }
-  }, [token]);
+  }, [dispatch, token]);
 
   if (shops.isLoading) return <ShopSkeleton />;
 
   return (
     <div className="shop-container">
-      {shops.data ? <ShopList shops={shops.data} /> : <EmptyShop />}
+      {shops.data && shops.data.length ? (
+        <ShopList shops={shops.data} />
+      ) : (
+        <EmptyShop />
+      )}
     </div>
   );
 };
