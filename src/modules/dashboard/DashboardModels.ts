@@ -69,7 +69,7 @@ export interface Invoice {
 }
 
 export interface Dashboard {
-  user: User | null;
+  user: RequestableItem<User>;
   shop: RequestableItem<ShopModels.Shop>;
   products: RequestableList<Product>;
   invoices: RequestableList<Invoice>;
@@ -77,7 +77,7 @@ export interface Dashboard {
 }
 
 export const getDefaultDashboard = (): Dashboard => ({
-  user: null,
+  user: getDefaultRequestableItem<User>(),
   shop: getDefaultRequestableItem<ShopModels.Shop>(),
   products: getDefaultRequestableList<Product>(),
   invoices: getDefaultRequestableList<Invoice>(),

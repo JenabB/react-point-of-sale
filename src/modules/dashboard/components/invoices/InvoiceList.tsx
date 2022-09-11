@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
-import { Space, Table, Tag, Button } from "antd";
-import type { ColumnType } from "antd/lib/table";
+import { Space, Table, Button } from "antd";
 import { DashboardModels } from "../../";
 import { format } from "fecha";
 import InvoiceDetail from "./InvoiceDetail";

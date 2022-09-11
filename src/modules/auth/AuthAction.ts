@@ -36,7 +36,7 @@ export const loginUser = createAsyncThunk(
       const response = await axios
         .post(`${HOST}/v1/user/login/owner`, params)
         .then((res) => {
-          sessionStorage.setItem("pos-token", res.data.data.token)
+          sessionStorage.setItem("pos-token", res.data.data.token);
           return res.data;
         });
 
@@ -47,7 +47,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const clearRegister = createAction("auth/clearRegister", () => ({
+export const clearAuth = createAction("auth/clearAuth", () => ({
   payload: {
     error: false,
     status: 0,

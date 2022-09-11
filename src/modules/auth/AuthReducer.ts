@@ -2,8 +2,9 @@ import { ActionReducerMapBuilder, isAnyOf } from "@reduxjs/toolkit";
 import { AuthAction, AuthModels } from ".";
 
 const cases = (builder: ActionReducerMapBuilder<AuthModels.AuthState>) => {
-  builder.addCase(AuthAction.clearRegister, (state, action) => {
+  builder.addCase(AuthAction.clearAuth, (state: any, action) => {
     state.register = action.payload;
+    state.login = action.payload;
   });
 };
 

@@ -1,47 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
-import { Button, Checkbox, Form, Input, Typography, Space, Layout } from "antd";
+import { Button, Alert, Form, Input, Typography, Space, Layout } from "antd";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
-import { AuthAction, AuthSelectors } from ".";
+// import { AuthAction, AuthSelectors } from ".";
 import { Loader, AlertMessage } from "../../common/components";
 
-const Register = () => {
+const ChangePassword = () => {
+  const [isError, setIsError] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { Title } = Typography;
 
   const { Content } = Layout;
 
-  const isLoading = useAppSelector(AuthSelectors.selectRequestStatus);
-  const login = useAppSelector(AuthSelectors.selectLoginRoot);
-
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      newPassword: "",
     },
     onSubmit: (values) => {
-      dispatch(AuthAction.loginUser(values));
+      //   dispatch(AuthAction.loginUser(values));
     },
   });
 
-  const token = sessionStorage.getItem("pos-token");
-
-  useEffect(() => {
-    if (login.status === 200 && token) {
-      navigate("/shop");
-      dispatch(AuthAction.clearAuth());
-    }
-  }, [login.status, navigate, token, dispatch]);
+  //   useEffect(() => {
+  //     if (login.status === 200 && sessionStorage.getItem("pos-token")) {
+  //       navigate("/shop");
+  //     }
+  //   }, [login.status]);
 
   return (
     <>
-      <AlertMessage error={login.error} />
-      <Loader show={isLoading} />
+      {/* <AlertMessage error={login.error} /> */}
+      {/* <Loader show={isLoading} /> */}
       <Content className="auth-form-container">
-        <Title level={5}>login to existing account</Title>
+        <Title level={5}>Change User Password</Title>
         <Form initialValues={{ remember: true }} onFinish={formik.handleSubmit}>
           <Form.Item
             name="email"
@@ -63,36 +59,51 @@ const Register = () => {
               value={formik.values.password}
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
+              autoComplete="off"
               placeholder="Password"
               onChange={formik.handleChange}
             />
           </Form.Item>
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-
-            {/* <a className="login-form-forgot" href="">
-              Forgot password
-            </a> */}
+          <Form.Item
+            name="newPassword"
+            rules={[
+              { required: true, message: "Please input your new Password!" },
+            ]}
+          >
+            <Input
+              value={formik.values.newPassword}
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              defaultValue=""
+              placeholder="New Password"
+              onChange={formik.handleChange}
+            />
           </Form.Item>
 
           <Form.Item>
             <Space>
               <Button
+                onClick={() => navigate(-1)}
+                className="login-form-button"
+              >
+                Cancel
+              </Button>
+              <Button
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
               >
-                Sign In
+                Change Password
               </Button>
-              Or <Link to="/register">Sign Up</Link>
             </Space>
           </Form.Item>
         </Form>
       </Content>
+      {isError && (
+        <Alert message="Error Text" type="error" closable onClose={() => {}} />
+      )}
     </>
   );
 };
 
-export default Register;
+export default ChangePassword;

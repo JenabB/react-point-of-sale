@@ -18,7 +18,7 @@ const Shop = () => {
       dispatch(ShopActions.getOwnerShops());
       dispatch(ShopActions.getCountries());
     }
-  }, [token, dispatch]);
+  }, [token]);
 
   if (shops.isLoading) return <ShopSkeleton />;
 

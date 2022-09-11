@@ -34,9 +34,10 @@ const Register = () => {
 
   useEffect(() => {
     if (register.status === 201) {
-      // router.push("/auth/login");
+      navigate("/login");
+      dispatch(AuthAction.clearAuth());
     }
-  }, [register.status]);
+  }, [register.status, navigate, dispatch]);
 
   return (
     <>

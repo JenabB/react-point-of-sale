@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Modal, Space, Typography } from "antd";
-import { useAppDispatch } from "../../../../common/state/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { DashboardActions } from "../..";
+import { DashboardActions, DashboardSelectors } from "../..";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { UserActions } from "../../action";
+import UserCard from "./UserCard";
 
 const Settings = () => {
   const { confirm } = Modal;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const user = useAppSelector(DashboardSelectors.selectUserRoot);
 
   const { id } = useParams();
 
@@ -27,15 +31,20 @@ const Settings = () => {
     });
   };
 
+  useEffect(() => {
+    dispatch(UserActions.getUserProfile());
+  }, [dispatch]);
+
   return (
     <>
       <div className="dashboard-content-item">
+        <UserCard user={user.data} />
         <Space direction="vertical">
           {/* <Link to="">
           <Typography>Upd</Typography>
         </Link> */}
-          <Link to="">
-            <Typography>Reset Password</Typography>
+          <Link to="/change-password">
+            <Typography>Change User Password</Typography>
           </Link>
           <Button type="primary" onClick={showConfirm} danger>
             Delete Shop
