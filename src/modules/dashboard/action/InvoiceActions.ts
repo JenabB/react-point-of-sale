@@ -20,34 +20,37 @@ export const getInvoices = createAsyncThunk(
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
+
       const response = await axios
         .get(`${HOST}/v1/shop/${shopId}/invoice`, config)
         .then((res) => res.data.data);
 
-      let i = 0;
-      let invoiceArray: Array<any> = [];
-      for (i; i < response.length; i++) {
-        const productRes = await axios
-          .get(
-            `${HOST}/v1/shop/${shopId}/invoice/${response[i].invoiceId}`,
-            config
-          )
-          .then((res) => res.data.data);
+      return response;
 
-        invoiceArray.push(productRes);
-      }
+      // let i = 0;
+      // let invoiceArray: Array<any> = [];
+      // for (i; i < response.length; i++) {
+      //   const productRes = await axios
+      //     .get(
+      //       `${HOST}/v1/shop/${shopId}/invoice/${response[i].invoiceId}`,
+      //       config
+      //     )
+      //     .then((res) => res.data.data);
 
-      const testt = response.map((item: any, i: any) => {
-        const data = { ...item, products: invoiceArray[i].products };
-        return data;
-      });
+      //   invoiceArray.push(productRes);
+      // }
 
-      console.log(
-        { invoices: response, invoiceDetails: invoiceArray, testt },
-        "reso"
-      );
+      // const testt = response.map((item: any, i: any) => {
+      //   const data = { ...item, products: invoiceArray[i].products };
+      //   return data;
+      // });
 
-      return invoiceArray;
+      // console.log(
+      //   { invoices: response, invoiceDetails: invoiceArray, testt },
+      //   "reso"
+      // );
+
+      // return invoiceArray;
     } catch (error) {
       rejectWithValue(error);
     }

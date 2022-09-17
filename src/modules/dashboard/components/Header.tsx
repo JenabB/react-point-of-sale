@@ -26,21 +26,30 @@ const Header: FC<Props> = (props) => {
   const navigate = useNavigate();
 
   const menu = (
-    <Menu
-      style={{ maxHeight: "400px", overflowY: "scroll" }}
-      items={data
-        .filter((shop) => shop.shopId !== props.shop.shopId)
-        .map((item: any) => ({
-          key: item.shopId,
-          label: (
-            <div className="dropdown-menu">
-              <Typography>{item.shopName}</Typography>
-              <Avatar>{item.shopName.charAt(0).toUpperCase()}</Avatar>
-            </div>
-          ),
-          onClick: () => navigate(`/dashboard/${item.shopId}/home`),
-        }))}
-    />
+    <>
+      <Menu
+        style={{ maxHeight: "400px", overflowY: "scroll" }}
+        items={data
+          .filter((shop) => shop.shopId !== props.shop.shopId)
+          .map((item: any) => ({
+            key: item.shopId,
+            label: (
+              <div className="dropdown-menu">
+                <Typography>{item.shopName}</Typography>
+                <Avatar>{item.shopName.charAt(0).toUpperCase()}</Avatar>
+              </div>
+            ),
+            onClick: () => navigate(`/dashboard/${item.shopId}/home`),
+          }))}
+      />
+      <Menu>
+        <Link to="/shop">
+          <div style={{ textAlign: "center" }}>
+            <Button style={{ border: "none" }}>Add Shop</Button>
+          </div>
+        </Link>
+      </Menu>
+    </>
   );
 
   return (
@@ -62,9 +71,6 @@ const Header: FC<Props> = (props) => {
                 <DownOutlined />
               </Space>
             </Dropdown>
-            <Link to="/shop">
-              <Button>Add Shop</Button>
-            </Link>
           </>,
         ]}
       ></PageHeader>
