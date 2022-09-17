@@ -1,5 +1,4 @@
 import React, { useEffect, useState, FC } from "react";
-import { format } from "fecha";
 import {
   Button,
   Modal,
@@ -49,7 +48,7 @@ const InvoiceFormModal: FC<Props> = (props) => {
     onSubmit: (values) => {},
   });
 
-  console.log(formik.values);
+  console.log(formik.values, "values");
 
   const handleSearch = () => {};
 
@@ -59,11 +58,12 @@ const InvoiceFormModal: FC<Props> = (props) => {
     );
 
     const productFinal = productSelected.map((el: any) => {
-      const { productId, quantity } = el;
+      return { productId: el.productId, quantity: el.quantity };
+      // const { productId, quantity } = el;
 
-      const product = { productId, quantity };
+      // const product = { productId, quantity };
 
-      return product;
+      // return product;
     });
 
     dispatch(
@@ -101,7 +101,8 @@ const InvoiceFormModal: FC<Props> = (props) => {
 
   return (
     <Modal
-      // style={{max}}
+      style={{ top: 20 }}
+      width={800}
       title={invoice ? "Update Invoice" : "Create Invoice"}
       visible={props.isOpen}
       onOk={handleOk}
@@ -109,14 +110,20 @@ const InvoiceFormModal: FC<Props> = (props) => {
       footer={[
         <>
           {totalProductPrice > 0 ? (
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography>
-                Total Price :{formatCurrency(totalProductPrice)}
-              </Typography>
-              <div>
-                <Button type="primary" onClick={handleOk}>
-                  Create Invoice
-                </Button>
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography>
+                  Total Price :{formatCurrency(totalProductPrice)}
+                </Typography>
+                <div>
+                  {formik.values.customerName ? (
+                    <Button type="primary" onClick={handleOk}>
+                      Create Invoice
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </div>
           ) : (
@@ -141,9 +148,12 @@ const InvoiceFormModal: FC<Props> = (props) => {
           <Option value="inside">Inside</Option>
           <Option value="outside">Outside</Option>
         </Select>
+        <Divider />
         {formik.values.productInsertMode === "inside" ? (
           <>
-            <div style={{ margin: "20px 0" }}>
+            <Typography style={{ marginTop: "10px" }}>Products</Typography>
+
+            <div style={{ margin: "10px 0" }}>
               <Search
                 onChange={(e) =>
                   formik.setFieldValue("searchQuery", e.target.value)
@@ -152,11 +162,8 @@ const InvoiceFormModal: FC<Props> = (props) => {
               />
               {formik.values.searchQuery === "" ? (
                 <>
-                  <Typography style={{ marginTop: "20px" }}>
-                    Products
-                  </Typography>
-                  <Divider />
                   <List
+                    grid={{ column: 2 }}
                     style={{
                       overflowY: "scroll",
                       height: "300px",
@@ -166,10 +173,14 @@ const InvoiceFormModal: FC<Props> = (props) => {
                     dataSource={formik.values.products}
                     renderItem={(item: any, index) => (
                       <List.Item
-                      // style={{
-                      //   display: "flex",
-                      //   justifyContent: "space-between",
-                      // }}
+                        style={{
+                          display: "flex",
+                          padding: 10,
+                          paddingRight: 20,
+                          backgroundColor: "white",
+
+                          margin: 7,
+                        }}
                       >
                         <List.Item.Meta
                           title={<Typography>{item.productName}</Typography>}
@@ -183,12 +194,21 @@ const InvoiceFormModal: FC<Props> = (props) => {
                         <InputNumber
                           type="number"
                           value={item.quantity}
-                          onChange={(e) =>
-                            formik.setFieldValue(
-                              `products.${index}.quantity`,
-                              e
-                            )
-                          }
+                          onChange={(e) => {
+                            const products = formik.values.products.map(
+                              (el: any) => {
+                                if (el.productId === item.productId) {
+                                  return { ...el, quantity: e };
+                                }
+                                return el;
+                              }
+                            );
+
+                            formik.setValues({
+                              ...formik.values,
+                              products,
+                            });
+                          }}
                         />
                       </List.Item>
                     )}
@@ -197,6 +217,7 @@ const InvoiceFormModal: FC<Props> = (props) => {
               ) : (
                 <>
                   <List
+                    grid={{ column: 2 }}
                     style={{
                       overflowY: "scroll",
                       height: "300px",
@@ -210,20 +231,36 @@ const InvoiceFormModal: FC<Props> = (props) => {
                       <List.Item
                         style={{
                           display: "flex",
-                          justifyContent: "space-between",
+                          paddingRight: 20,
                         }}
                       >
-                        <Typography>a ada{item.productName}</Typography>
-                        <Typography>{item.productPrice}</Typography>
+                        <List.Item.Meta
+                          title={<Typography>{item.productName}</Typography>}
+                          description={
+                            <Typography>
+                              {formatCurrency(item.productPrice)}
+                            </Typography>
+                          }
+                        />
+
                         <InputNumber
                           type="number"
                           value={item.quantity}
-                          onChange={(e) =>
-                            formik.setFieldValue(
-                              `products.${index}.quantity`,
-                              e
-                            )
-                          }
+                          onChange={(e) => {
+                            const products = formik.values.products.map(
+                              (el: any) => {
+                                if (el.productId === item.productId) {
+                                  return { ...el, quantity: e };
+                                }
+                                return el;
+                              }
+                            );
+
+                            formik.setValues({
+                              ...formik.values,
+                              products,
+                            });
+                          }}
                         />
                       </List.Item>
                     )}
