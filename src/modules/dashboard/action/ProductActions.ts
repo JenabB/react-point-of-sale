@@ -3,12 +3,6 @@ import axios from "axios";
 
 const HOST = "https://svc-not-e.herokuapp.com";
 
-const token = sessionStorage.getItem("pos-token");
-
-const config = {
-  headers: { Authorization: `Bearer ${token}` },
-};
-
 export const clearError409 = createAction("dashboard/clearError409", () => {
   return {
     payload: {
@@ -21,6 +15,11 @@ export const getProducts = createAsyncThunk(
   "dashboard/getProducts",
   async (shopId: string | undefined, { rejectWithValue }) => {
     try {
+      const token = sessionStorage.getItem("pos-token");
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
       const response = await axios
         .get(`${HOST}/v1/shop/${shopId}/product`, config)
         .then((res) => res.data.data);
@@ -44,6 +43,11 @@ interface SaveProductParams {
 export const saveProduct = createAsyncThunk(
   "dashboard/saveProduct",
   async (params: SaveProductParams, { rejectWithValue }) => {
+    const token = sessionStorage.getItem("pos-token");
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     const response = params.productId
       ? await axios
           .put(
@@ -86,6 +90,11 @@ export const deleteProduct = createAsyncThunk(
   "dashboard/deleteProduct",
   async (params: DeleteProductParams, { rejectWithValue }) => {
     try {
+      const token = sessionStorage.getItem("pos-token");
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
       await axios.delete(
         `${HOST}/v1/shop/${params.shopId}/product/${params.productId}`,
         config

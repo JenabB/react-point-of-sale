@@ -1,21 +1,19 @@
-import { ShopFilled } from "@ant-design/icons";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const HOST = "https://svc-not-e.herokuapp.com";
 
-const token = sessionStorage.getItem("pos-token");
-
-const config = {
-  headers: { Authorization: `Bearer ${token}` },
-};
-
 export const getUser = createAsyncThunk(
   "dashboard/getUser",
   async (_, { rejectWithValue }) => {
+    const tokenConfig = sessionStorage.getItem("pos-token");
+
+    const configHeader = {
+      headers: { Authorization: `Bearer ${tokenConfig}` },
+    };
     try {
       const response = await axios
-        .get(`${HOST}/v1/user/profile`, config)
+        .get(`${HOST}/v1/user/profile`, configHeader)
         .then((res) => res.data.data);
 
       return response;
@@ -29,8 +27,13 @@ export const getOwnerShops = createAsyncThunk(
   "shop/getOwnerShops",
   async (_, { rejectWithValue }) => {
     try {
+      const tokenConfig = sessionStorage.getItem("pos-token");
+
+      const configHeader = {
+        headers: { Authorization: `Bearer ${tokenConfig}` },
+      };
       const response = await axios
-        .get(`${HOST}/v1/shop`, config)
+        .get(`${HOST}/v1/shop`, configHeader)
         .then((res) => res.data.data);
 
       return response;
@@ -101,14 +104,19 @@ export const saveShop = createAsyncThunk(
   "shop/saveShop",
   async (params: SaveShopParams, { rejectWithValue }) => {
     try {
+      const tokenConfig = sessionStorage.getItem("pos-token");
+
+      const configHeader = {
+        headers: { Authorization: `Bearer ${tokenConfig}` },
+      };
       const response = params.shopId
         ? await axios
-            .put(`${HOST}/v1/shop/${params.shopId}`, params.data, config)
+            .put(`${HOST}/v1/shop/${params.shopId}`, params.data, configHeader)
             .then((res) => {
               return { shopId: params.shopId, ...params.data };
             })
         : await axios
-            .post(`${HOST}/v1/shop`, params.data, config)
+            .post(`${HOST}/v1/shop`, params.data, configHeader)
             .then((res) => res.data.data);
 
       return response;

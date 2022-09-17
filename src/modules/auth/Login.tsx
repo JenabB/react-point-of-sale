@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
 import { AuthAction, AuthSelectors } from ".";
 import { Loader, AlertMessage } from "../../common/components";
+import { ShopActions } from "../shop";
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -30,11 +31,12 @@ const Register = () => {
   const token = sessionStorage.getItem("pos-token");
 
   useEffect(() => {
-    if (login.status === 200 && token) {
+    if (login.status === 200 && token !== null) {
+      dispatch(ShopActions.getOwnerShops());
       navigate("/shop");
       dispatch(AuthAction.clearAuth());
     }
-  }, [login.status, navigate, token, dispatch]);
+  }, [login.status, token, navigate, dispatch]);
 
   return (
     <>
