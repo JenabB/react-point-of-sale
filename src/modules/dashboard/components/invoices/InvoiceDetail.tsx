@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from "react";
-import { format } from "fecha";
+import { formatDate } from "../../../../common/utils";
 import { Button, Modal, Typography, Descriptions } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { DashboardActions, DashboardSelectors, DashboardModels } from "../../";
@@ -47,7 +47,7 @@ const InvoiceDetail: FC<Props> = (props) => {
               {invoice.customerName}
             </Descriptions.Item>
             <Descriptions.Item label="Created At">
-              {format(new Date(invoice.createdAt), "D MMM YYYY")}
+              {formatDate(invoice.createdAt)}
             </Descriptions.Item>
           </Descriptions>
         </>

@@ -7,6 +7,7 @@ import {
   Menu,
   Space,
   Button,
+  Popover,
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { ShopModels } from "../../shop";
@@ -52,6 +53,17 @@ const Header: FC<Props> = (props) => {
     </>
   );
 
+  const profileMenu = (
+    <>
+      <Menu>
+        <Typography>User</Typography>
+        <Button type="text" danger>
+          Log Out
+        </Button>
+      </Menu>
+    </>
+  );
+
   return (
     <div>
       <PageHeader
@@ -64,13 +76,20 @@ const Header: FC<Props> = (props) => {
         title="Dashboard"
         extra={[
           <>
-            <Dropdown overlay={menu}>
-              <Space>
-                <Typography>{props.shop.shopName}</Typography>
-                <Avatar>{props.shop.shopName.charAt(0).toUpperCase()}</Avatar>
-                <DownOutlined />
-              </Space>
-            </Dropdown>
+            <div>
+              <Dropdown overlay={menu}>
+                <Space>
+                  <Typography>{props.shop.shopName}</Typography>
+                  <Avatar>{props.shop.shopName.charAt(0).toUpperCase()}</Avatar>
+                  <DownOutlined />
+                </Space>
+              </Dropdown>
+            </div>
+            <div style={{ marginLeft: "20px" }}>
+              <Dropdown placement="bottom" overlay={profileMenu}>
+                <Avatar>Userrr</Avatar>
+              </Dropdown>
+            </div>
           </>,
         ]}
       ></PageHeader>

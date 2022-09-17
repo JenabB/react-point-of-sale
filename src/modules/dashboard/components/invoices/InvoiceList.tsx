@@ -1,10 +1,9 @@
 import React, { FC, useState } from "react";
 import { Space, Table, Button } from "antd";
 import { DashboardModels } from "../../";
-import { format } from "fecha";
 import InvoiceDetail from "./InvoiceDetail";
 import InvoiceFormModal from "./InvoiceFormModal";
-import { formatCurrency } from "../../../../common/utils";
+import { formatCurrency, formatDate } from "../../../../common/utils";
 
 interface Props {
   invoices: Array<DashboardModels.Invoice>;
@@ -100,7 +99,7 @@ const InvoiceList: FC<Props> = (props) => {
     invoiceCode: invoice.invoiceCode,
     customerName: invoice.customerName,
     totalPrice: invoice.totalPrice,
-    createdAt: format(new Date(invoice.createdAt), "D MMM YYYY"),
+    createdAt: formatDate(invoice.createdAt),
     productInsertMode: invoice.productInsertMode,
   }));
 
