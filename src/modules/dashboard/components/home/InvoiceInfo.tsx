@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Typography, Card, Col, Row, Statistic } from "antd";
 import { useAppSelector } from "../../../../common/state/hooks";
 import { DashboardSelectors } from "../..";
-import { Typography, Card, Col, Row } from "antd";
-import { formatCurrency } from "../../../../common/utils";
+import { formatCurrency, kFormat } from "../../../../common/utils";
 
 const InvoiceInfo = () => {
   const { data } = useAppSelector(DashboardSelectors.selectInvoices);
@@ -20,16 +20,15 @@ const InvoiceInfo = () => {
     <Row gutter={12}>
       <Col span={6}>
         <Card style={{ textAlign: "center" }}>
-          <Typography.Title level={5}>{data.length}</Typography.Title>
-          <Typography>Invoices</Typography>
+          <Statistic title="Invoices" value={kFormat(data.length, 3)} />
         </Card>
       </Col>
       <Col span={6}>
         <Card style={{ textAlign: "center" }}>
-          <Typography.Title level={5}>
-            {formatCurrency(totalInvoiceCreated)}
-          </Typography.Title>
-          <Typography>Total Invoice Price</Typography>
+          <Statistic
+            title="Total Invoice price"
+            value={kFormat(totalInvoiceCreated, 3)}
+          />
         </Card>
       </Col>
       <Col span={6}>

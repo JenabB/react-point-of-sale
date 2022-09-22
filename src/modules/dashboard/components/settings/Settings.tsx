@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
 import { Button, Modal, Space, Typography } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { DashboardActions, DashboardSelectors } from "../..";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { UserActions } from "../../action";
 import UserCard from "./UserCard";
 
 const Settings = () => {
@@ -31,18 +29,14 @@ const Settings = () => {
     });
   };
 
-  useEffect(() => {
-    dispatch(UserActions.getUserProfile());
-  }, [dispatch]);
-
   return (
     <>
       <div className="dashboard-content-item">
         <UserCard user={user.data} />
         <Space direction="vertical">
-          {/* <Link to="">
-          <Typography>Upd</Typography>
-        </Link> */}
+          <Link to="/change-information">
+            <Typography>Change User Information</Typography>
+          </Link>
           <Link to="/change-password">
             <Typography>Change User Password</Typography>
           </Link>

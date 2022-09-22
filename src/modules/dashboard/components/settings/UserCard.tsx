@@ -8,15 +8,13 @@ interface UserCardProps {
   user: DashboardModels.User;
 }
 
-const UserCard: FC<UserCardProps> = (props) => {
-  const user = useAppSelector(DashboardSelectors.selectUserRoot);
-
+const UserCard: FC<UserCardProps> = ({ user }) => {
   return (
     <Card>
       <Typography.Title level={4}>{user.fullName}</Typography.Title>
       <div>
         <Typography.Paragraph>
-          {formatDate(user.createdAt)}
+          Joined at {formatDate(user.createdAt)}
         </Typography.Paragraph>
         <Typography.Paragraph>{user.userType}</Typography.Paragraph>
         <Typography.Paragraph>{user.email}</Typography.Paragraph>

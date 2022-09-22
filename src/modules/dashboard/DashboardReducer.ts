@@ -1,6 +1,6 @@
 import { ActionReducerMapBuilder, isAnyOf } from "@reduxjs/toolkit";
 import { DashboardActions, DashboardModels } from ".";
-import { ProductActions, InvoiceActions } from "./action";
+import { ProductActions, InvoiceActions, UserActions } from "./action";
 import { ShopActions } from "../shop";
 
 const cases = (builder: ActionReducerMapBuilder<DashboardModels.Dashboard>) => {
@@ -16,7 +16,15 @@ const matchers = (
     .addMatcher(
       isAnyOf(DashboardActions.getUser.fulfilled),
       (state: any, action) => {
-        state.user = action.payload;
+        state.user.data = action.payload;
+      }
+    )
+
+    .addMatcher(
+      isAnyOf(UserActions.changeUserInformation.fulfilled),
+      (state: any, action) => {
+        const updatedData = action.payload.data;
+        state.user.data = { ...state.user.data, updatedData };
       }
     )
 

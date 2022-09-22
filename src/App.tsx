@@ -11,6 +11,7 @@ import Invoices from "./modules/dashboard/components/invoices/Invoices";
 import { Settings } from "./modules/dashboard/components/settings";
 import jwtDecode from "jwt-decode";
 import ChangePassword from "./modules/user/ChangePassword";
+import ChangeUserInformation from "./modules/user/ChangeUserInformation";
 
 const App = () => {
   // const token: any = sessionStorage.getItem("pos-token");
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="change-password" element={<ChangePassword />} />
+        <Route path="change-information" element={<ChangeUserInformation />} />
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/dashboard/:id" element={<Dashboard />}>
           <Route path="home" element={<Home />} />

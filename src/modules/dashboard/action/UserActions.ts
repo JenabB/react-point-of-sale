@@ -32,6 +32,32 @@ export const getUserProfile = createAsyncThunk(
   }
 );
 
+interface ChangeUserInformationParams {
+  fullName: string;
+  contactNumber: string;
+  address: string;
+}
+
+export const changeUserInformation = createAsyncThunk(
+  "dashboard/changeUserInformation",
+  async (params: ChangeUserInformationParams, { rejectWithValue }) => {
+    try {
+      const response = await axios
+        .put(`${HOST}/v1/user/profile`, params, config)
+        .then((res) => {
+          console.log(res.data, "data");
+          return res.data;
+        });
+
+      const rtn = { ...response, data: params };
+
+      return rtn;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
 interface ChangeUserPasswordParams {
   email: string;
   password: string;
