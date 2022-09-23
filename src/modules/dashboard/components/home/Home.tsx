@@ -1,17 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
-import {
-  Descriptions,
-  Layout,
-  Button,
-  Tooltip,
-  Avatar,
-  Card,
-  Typography,
-  Divider,
-  Badge,
-  Space,
-} from "antd";
+import { Layout, Button, Tooltip, Typography, Divider, Space } from "antd";
 import {
   EditOutlined,
   GlobalOutlined,
@@ -19,29 +8,27 @@ import {
   PhoneOutlined,
 } from "@ant-design/icons";
 import { DashboardSelectors } from "../..";
-import { useState } from "react";
 import ShopCreateModal from "../../../shop/components/ShopCreateModal";
 import { AreaActions } from "../../action";
 import InvoiceInfo from "./InvoiceInfo";
 import ProductInfo from "./ProductInfo";
 
 const Home = () => {
+  //state
   const [country, setCountry] = useState("");
   const [province, setProvince] = useState("");
   const [regency, setRegency] = useState("");
   const [editOpen, setEditOpen] = useState(false);
 
   const dispatch = useAppDispatch();
+  const { Content } = Layout;
+  const { data } = useAppSelector(DashboardSelectors.selectShop);
 
+  //action
   const handleOpen = (shop: any) => {
     setEditOpen(true);
   };
-
   const handleClose = () => setEditOpen(false);
-
-  const { Content } = Layout;
-  const { Title } = Typography;
-  const { data } = useAppSelector(DashboardSelectors.selectShop);
 
   useEffect(() => {
     dispatch(
@@ -96,15 +83,6 @@ const Home = () => {
               </Space>
             </div>
           </div>
-          {/* <Descriptions title={data.shopName} layout="vertical">
-          <Descriptions.Item label="Address">{data.address}</Descriptions.Item>
-          <Descriptions.Item label="Contact Number">
-            {data.contactNumber}
-          </Descriptions.Item>
-          <Descriptions.Item label="Country">{country}</Descriptions.Item>
-          <Descriptions.Item label="Province">{province}</Descriptions.Item>
-          <Descriptions.Item label="Regency">{regency}</Descriptions.Item>
-        </Descriptions> */}
         </Content>
         <div style={{ margin: "20px 0" }}>
           <Typography.Title
