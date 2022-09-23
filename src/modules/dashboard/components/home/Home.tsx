@@ -10,8 +10,14 @@ import {
   Typography,
   Divider,
   Badge,
+  Space,
 } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  GlobalOutlined,
+  HomeOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
 import { DashboardSelectors } from "../..";
 import { useState } from "react";
 import ShopCreateModal from "../../../shop/components/ShopCreateModal";
@@ -68,13 +74,26 @@ const Home = () => {
             </Tooltip>
           </div>
           <div>
-            <Typography>{data.shopName}</Typography>
-            <Typography>{data.address}</Typography>
-            <Typography>{data.contactNumber}</Typography>
+            <Typography.Title level={3}>{data.shopName}</Typography.Title>
             <div>
-              <Typography>Country: {country}</Typography>
-              <Typography>Province: {province}</Typography>
-              <Typography>Regency: {regency}</Typography>
+              <Space>
+                <HomeOutlined />
+                <Typography>{data.address}</Typography>
+              </Space>
+            </div>
+            <div>
+              <Space>
+                <PhoneOutlined />
+                <Typography>{data.contactNumber}</Typography>
+              </Space>
+            </div>
+            <div>
+              <Space>
+                <GlobalOutlined />
+                <Typography>{regency}, </Typography>
+                <Typography>{province},</Typography>
+                <Typography> {country}</Typography>
+              </Space>
             </div>
           </div>
           {/* <Descriptions title={data.shopName} layout="vertical">

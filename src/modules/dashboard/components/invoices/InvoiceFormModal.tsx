@@ -9,14 +9,15 @@ import {
   InputNumber,
   Divider,
   Tooltip,
+  Space,
 } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
-import { DashboardActions, DashboardSelectors, DashboardModels } from "../../";
+import { DashboardSelectors, DashboardModels } from "../../";
 import { useFormik } from "formik";
 import { useParams } from "react-router-dom";
 import { InvoiceActions } from "../../action";
 import { formatCurrency } from "../../../../common/utils";
-import { PlusCircleFilled } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 
 interface Props {
   invoice: DashboardModels.Invoice | null;
@@ -31,7 +32,7 @@ const InvoiceFormModal: FC<Props> = (props) => {
   const { Search } = Input;
 
   const { id } = useParams();
-  console.log(id);
+
   const invoice = useAppSelector(DashboardSelectors.selectInvoiceDetails);
   const { data } = useAppSelector(DashboardSelectors.selectProducts);
 
@@ -46,13 +47,17 @@ const InvoiceFormModal: FC<Props> = (props) => {
       productInsertMode: "inside",
       customerName: "",
       products: prod,
+      productsOutside: [],
     },
     onSubmit: (values) => {},
   });
 
-  console.log(formik.values, "values");
-
-  const handleSearch = () => {};
+  const handleAddProductOutside = () => {
+    formik.setFieldValue("productsOutside", [
+      ...formik.values.productsOutside,
+      { productName: "", productPrice: 0, quantity: 0 },
+    ]);
+  };
 
   const handleOk = () => {
     const productSelected = formik.values.products.filter(
@@ -61,12 +66,11 @@ const InvoiceFormModal: FC<Props> = (props) => {
 
     const productFinal = productSelected.map((el: any) => {
       return { productId: el.productId, quantity: el.quantity };
-      // const { productId, quantity } = el;
-
-      // const product = { productId, quantity };
-
-      // return product;
     });
+
+    const productOutsideFinal = formik.values.productsOutside.filter(
+      (el: any) => el.quantity !== 0
+    );
 
     dispatch(
       InvoiceActions.addInvoice({
@@ -75,7 +79,10 @@ const InvoiceFormModal: FC<Props> = (props) => {
           invoiceCode: "INV0040",
           productInsertMode: formik.values.productInsertMode,
           customerName: formik.values.customerName,
-          products: productFinal,
+          products:
+            formik.values.productInsertMode === "inside"
+              ? productFinal
+              : productOutsideFinal,
         },
       })
     );
@@ -94,12 +101,21 @@ const InvoiceFormModal: FC<Props> = (props) => {
   }, [dispatch, props.invoice?.invoiceId, id]);
 
   useEffect(() => {
-    const totalProductPrice = formik.values.products
-      .map((el: any) => el.productPrice * el.quantity)
-      .reduce((a: number, b: number) => a + b, 0);
+    const totalProductPrice =
+      formik.values.productInsertMode === "inside"
+        ? formik.values.products
+            .map((el: any) => el.productPrice * el.quantity)
+            .reduce((a: number, b: number) => a + b, 0)
+        : formik.values.productsOutside
+            .map((el: any) => el.productPrice * el.quantity)
+            .reduce((a: number, b: number) => a + b, 0);
 
     setTotalProductPrice(totalProductPrice);
-  }, [formik.values.products]);
+  }, [
+    formik.values.productInsertMode,
+    formik.values.products,
+    formik.values.productsOutside,
+  ]);
 
   return (
     <Modal
@@ -273,13 +289,81 @@ const InvoiceFormModal: FC<Props> = (props) => {
           </>
         ) : (
           <>
-            <Tooltip title="add product">
-              <Button
-                type="primary"
-                shape="circle"
-                icon={<PlusCircleFilled />}
-              />
-            </Tooltip>
+            <div style={{ marginBottom: 10 }}>
+              <Tooltip title="add product">
+                <Button
+                  onClick={handleAddProductOutside}
+                  type="primary"
+                  icon={<PlusOutlined />}
+                >
+                  Add product
+                </Button>
+              </Tooltip>
+            </div>
+            {formik.values.productsOutside.length > 0 ? (
+              <div
+                style={{ height: "300px", overflowY: "scroll", padding: 10 }}
+              >
+                {formik.values.productsOutside.map((product: any, index) => (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        margin: "20px 0",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Space>
+                        <div>
+                          <p style={{ marginBottom: 0 }}>Product Name</p>
+                          <Input
+                            placeholder="Product name"
+                            value={product.productName}
+                            onChange={(e) =>
+                              formik.setFieldValue(
+                                `productsOutside.${index}.productName`,
+                                e.target.value
+                              )
+                            }
+                          />
+                        </div>
+                        <div>
+                          <p style={{ marginBottom: 0 }}>Product Price</p>
+                          <InputNumber
+                            style={{ width: "200px" }}
+                            prefix="Rp"
+                            placeholder="product price"
+                            value={product.productPrice}
+                            onChange={(e) =>
+                              formik.setFieldValue(
+                                `productsOutside.${index}.productPrice`,
+                                e
+                              )
+                            }
+                          />
+                        </div>
+                      </Space>
+                      <div>
+                        <p style={{ marginBottom: 0 }}>Quantity</p>
+                        <InputNumber
+                          placeholder="product quantity"
+                          value={product.quantity}
+                          onChange={(e) =>
+                            formik.setFieldValue(
+                              `productsOutside.${index}.quantity`,
+                              e
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+                    <Divider />
+                  </>
+                ))}
+              </div>
+            ) : (
+              <></>
+            )}
           </>
         )}
       </form>
