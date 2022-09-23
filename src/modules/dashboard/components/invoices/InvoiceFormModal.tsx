@@ -8,6 +8,7 @@ import {
   List,
   InputNumber,
   Divider,
+  Tooltip,
 } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { DashboardActions, DashboardSelectors, DashboardModels } from "../../";
@@ -15,6 +16,7 @@ import { useFormik } from "formik";
 import { useParams } from "react-router-dom";
 import { InvoiceActions } from "../../action";
 import { formatCurrency } from "../../../../common/utils";
+import { PlusCircleFilled } from "@ant-design/icons";
 
 interface Props {
   invoice: DashboardModels.Invoice | null;
@@ -270,7 +272,15 @@ const InvoiceFormModal: FC<Props> = (props) => {
             </div>
           </>
         ) : (
-          <></>
+          <>
+            <Tooltip title="add product">
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<PlusCircleFilled />}
+              />
+            </Tooltip>
+          </>
         )}
       </form>
     </Modal>

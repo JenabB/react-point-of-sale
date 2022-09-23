@@ -72,6 +72,14 @@ code {
   display: inline-block;
 }
 
+.user-card-space {
+  display: flex;
+}
+
+.mock-block {
+  padding-top: 9px;
+}
+
 @media only screen and (max-width: 600px) {
   .auth-form-container {
     width: 100%;

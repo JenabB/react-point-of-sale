@@ -33,17 +33,19 @@ const Settings = () => {
     <>
       <div className="dashboard-content-item">
         <UserCard user={user.data} />
-        <Space direction="vertical">
-          <Link to="/change-information">
-            <Typography>Change User Information</Typography>
-          </Link>
-          <Link to="/change-password">
-            <Typography>Change User Password</Typography>
-          </Link>
-          <Button type="primary" onClick={showConfirm} danger>
-            Delete Shop
-          </Button>
-        </Space>
+        <div style={{ marginTop: "20px" }}>
+          <Space size="large">
+            <Link to="/change-information">
+              <Button type="primary">Change User Information</Button>
+            </Link>
+            <Link to="/change-password">
+              <Button>Change User Password</Button>
+            </Link>
+            <Button type="text" onClick={showConfirm} danger>
+              Delete Shop
+            </Button>
+          </Space>
+        </div>
       </div>
     </>
   );
