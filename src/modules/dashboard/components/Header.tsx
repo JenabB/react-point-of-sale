@@ -9,11 +9,10 @@ import {
   Button,
   Popconfirm,
 } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import { ShopModels } from "../../shop";
-import { ShopSelectors } from "../../shop";
-import { useAppSelector } from "../../../common/state/hooks";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { DownOutlined } from "@ant-design/icons";
+import { useAppSelector } from "../../../common/state/hooks";
+import { ShopModels, ShopSelectors } from "../../shop";
 import { DashboardSelectors } from "../";
 
 interface Props {

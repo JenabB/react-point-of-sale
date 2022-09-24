@@ -1,37 +1,37 @@
 import React, { useEffect, FC } from "react";
+import { Modal, Typography, Descriptions, List } from "antd";
+import { useParams } from "react-router-dom";
 import { formatDate } from "../../../../common/utils";
-import { Button, Modal, Typography, Descriptions } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
-import { DashboardActions, DashboardSelectors, DashboardModels } from "../../";
+import { DashboardSelectors, DashboardModels } from "../../";
 import { InvoiceActions } from "../../action";
+import InvoiceDetailSkeleton from "./InvoiceDetailSkeleton";
 
 interface Props {
   invoice: DashboardModels.Invoice | null;
   isOpen: boolean;
   onClose: () => void;
 }
+
 const InvoiceDetail: FC<Props> = (props) => {
-  console.log(props, "detail");
   const dispatch = useAppDispatch();
 
-  const { shopId } = useAppSelector(DashboardSelectors.selectShop);
+  const { id } = useParams();
   const invoice = useAppSelector(DashboardSelectors.selectInvoiceDetails);
 
   useEffect(() => {
-    if (props.invoice?.invoiceId) {
-      dispatch(
-        InvoiceActions.getInvoiceById({
-          shopId,
-          invoiceId: props.invoice?.invoiceId,
-        })
-      );
-    }
-  }, [dispatch, props.invoice?.invoiceId, shopId]);
+    dispatch(
+      InvoiceActions.getInvoiceById({
+        shopId: id,
+        invoiceId: props.invoice?.invoiceId,
+      })
+    );
+  }, [dispatch, id, props.invoice?.invoiceId]);
+
   return (
     <Modal
       title="Invoice Details"
       visible={props.isOpen}
-      //   onOk={handleOk}
       onCancel={props.onClose}
     >
       {invoice ? (
@@ -50,9 +50,24 @@ const InvoiceDetail: FC<Props> = (props) => {
               {formatDate(invoice.createdAt)}
             </Descriptions.Item>
           </Descriptions>
+          <div style={{ marginTop: 20 }}>
+            <Typography.Paragraph>Products</Typography.Paragraph>
+            <List
+              dataSource={invoice.products}
+              renderItem={(item: any) => (
+                <List.Item>
+                  <List.Item.Meta
+                    title={item.productName}
+                    description={item.productPrice}
+                  />
+                  <div>{item.quantity}</div>
+                </List.Item>
+              )}
+            />
+          </div>
         </>
       ) : (
-        <h1>Loading...</h1>
+        <InvoiceDetailSkeleton />
       )}
     </Modal>
   );

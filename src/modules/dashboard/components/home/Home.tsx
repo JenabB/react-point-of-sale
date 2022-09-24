@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { Layout, Button, Tooltip, Typography, Divider, Space } from "antd";
 import {
   EditOutlined,
@@ -7,9 +6,10 @@ import {
   HomeOutlined,
   PhoneOutlined,
 } from "@ant-design/icons";
+import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
 import { DashboardSelectors } from "../..";
-import ShopCreateModal from "../../../shop/components/ShopCreateModal";
 import { AreaActions } from "../../action";
+import ShopCreateModal from "../../../shop/components/ShopCreateModal";
 import InvoiceInfo from "./InvoiceInfo";
 import ProductInfo from "./ProductInfo";
 
