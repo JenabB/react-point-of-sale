@@ -6,13 +6,13 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import UserCard from "./UserCard";
 
 const Settings = () => {
-  const { confirm } = Modal;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const user = useAppSelector(DashboardSelectors.selectUserRoot);
 
   const { id } = useParams();
+  const { confirm } = Modal;
 
   const showConfirm = () => {
     confirm({

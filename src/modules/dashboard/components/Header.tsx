@@ -7,13 +7,14 @@ import {
   Menu,
   Space,
   Button,
-  Popover,
+  Popconfirm,
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { ShopModels } from "../../shop";
 import { ShopSelectors } from "../../shop";
 import { useAppSelector } from "../../../common/state/hooks";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { DashboardSelectors } from "../";
 
 interface Props {
   shop: ShopModels.Shop;
@@ -24,7 +25,16 @@ const Header: FC<Props> = (props) => {
     ShopSelectors.selectShopRoot
   );
 
+  const user = useAppSelector(DashboardSelectors.selectUserRoot);
+
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const confirm = () => {
+    navigate("/login");
+  };
+
+  const cancel = () => {};
 
   const menu = (
     <>
@@ -56,10 +66,22 @@ const Header: FC<Props> = (props) => {
   const profileMenu = (
     <>
       <Menu>
-        <Typography>User</Typography>
-        <Button type="text" danger>
-          Log Out
-        </Button>
+        <div style={{ padding: 2 }}>
+          <Link to={`/dashboard/${id}/settings`}>
+            <Typography>User Profile</Typography>
+          </Link>
+        </div>
+        <Popconfirm
+          title="Are you sure to logout?"
+          onConfirm={confirm}
+          onCancel={cancel}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="text" danger>
+            Log Out
+          </Button>
+        </Popconfirm>
       </Menu>
     </>
   );
@@ -87,7 +109,13 @@ const Header: FC<Props> = (props) => {
             </div>
             <div style={{ marginLeft: "20px" }}>
               <Dropdown placement="bottom" overlay={profileMenu}>
-                <Avatar>Userrr</Avatar>
+                <Avatar
+                  shape="square"
+                  size={40}
+                  style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}
+                >
+                  {user.data.fullName.charAt(0).toUpperCase()}
+                </Avatar>
               </Dropdown>
             </div>
           </>,

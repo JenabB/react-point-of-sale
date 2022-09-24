@@ -197,7 +197,9 @@ const ProductList: FC<Props> = (props) => {
             okText="Yes"
             cancelText="No"
           >
-            <Button danger>Delete</Button>
+            <Button type="primary" danger>
+              Delete
+            </Button>
           </Popconfirm>
         </Space>
       ),
