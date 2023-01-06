@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Card, Col, Row, Statistic } from "antd";
-import { useAppSelector } from "../../../../common/state/hooks";
-import { DashboardSelectors } from "../..";
-import { formatCurrency, kFormat } from "../../../../common/utils";
+import { useAppSelector } from "common/state/hooks";
+import { DashboardSelectors } from "modules/dashboard";
+import { formatCurrency, kFormat } from "common/utils";
 
 const InvoiceInfo = () => {
   const { data } = useAppSelector(DashboardSelectors.selectInvoices);

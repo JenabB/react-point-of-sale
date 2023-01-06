@@ -1,4 +1,4 @@
-import { ShopModels } from ".";
+import { ShopModels } from "modules/shop";
 import { createSelector } from "@reduxjs/toolkit";
 
 export const shopRoot = (state: any): ShopModels.ShopState => state.shop;

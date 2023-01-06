@@ -1,6 +1,6 @@
 import { ActionReducerMapBuilder, isAnyOf } from "@reduxjs/toolkit";
-import { ShopActions, ShopModels } from ".";
-import { DashboardActions } from "../dashboard";
+import { ShopActions, ShopModels } from "modules/shop";
+import { DashboardActions } from "modules/dashboard";
 
 const cases = (builder: ActionReducerMapBuilder<ShopModels.ShopState>) => {};
 

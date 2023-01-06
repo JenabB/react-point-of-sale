@@ -1,5 +1,3 @@
-import { log } from "console";
-
 export * as AuthModels from "./AuthModels";
 export * as AuthAction from "./AuthAction";
 export * as AuthSelectors from "./AuthSelectors";
@@ -9,4 +7,3 @@ export { authReducer } from "./AuthSlice";
 
 export { default as Login } from "./Login";
 export { default as Register } from "./Register";
-export { default as Auth } from "./Auth";

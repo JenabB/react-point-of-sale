@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
-import { ShopModels, ShopReducer } from ".";
+import { ShopModels, ShopReducer } from "modules/shop";
 
 const initialState: ShopModels.ShopState = ShopModels.getDefaultShop();
 

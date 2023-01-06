@@ -1,10 +1,9 @@
-import React, { FC } from "react";
-import { ShopModels } from "../";
+import React, { FC, useState } from "react";
+import { ShopModels } from "modules/shop";
 import { Tooltip, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ShopItem from "./ShopItem";
 import ShopCreateModal from "./ShopCreateModal";
-import { useState } from "react";
 
 interface Props {
   shops: Array<ShopModels.Shop>;

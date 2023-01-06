@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
-import { Button, Checkbox, Form, Input, Typography, Space, Layout } from "antd";
+import { Checkbox, Form, Typography, Space, Layout } from "antd";
 import { useFormik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
+import { useAppDispatch, useAppSelector } from "common/state/hooks";
 import { AuthAction, AuthSelectors } from ".";
-import { Loader, AlertMessage } from "../../common/components";
-import { ShopActions } from "../shop";
+import { Loader, AlertMessage } from "common/components";
+import { ShopActions } from "modules/shop";
+import { Input, Button } from "common/components/custom";
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -43,7 +44,7 @@ const Register = () => {
       <AlertMessage error={login.error} />
       <Loader show={isLoading} />
       <Content className="auth-form-container">
-        <Title level={5}>login to existing account</Title>
+        <Title level={2}>Welcome Back!</Title>
         <Form initialValues={{ remember: true }} onFinish={formik.handleSubmit}>
           <Form.Item
             name="email"
@@ -81,13 +82,14 @@ const Register = () => {
 
           <Form.Item>
             <Space>
-              <Button
+              <Button type="primary" htmlType="submit" text="Sign In" />
+              {/* <Button
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
               >
                 Sign In
-              </Button>
+              </Button> */}
               Or <Link to="/register">Sign Up</Link>
             </Space>
           </Form.Item>

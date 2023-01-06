@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder, isAnyOf } from "@reduxjs/toolkit";
 import { DashboardActions, DashboardModels } from ".";
 import { ProductActions, InvoiceActions, UserActions } from "./action";
-import { ShopActions } from "../shop";
+import { ShopActions } from "modules/shop";
 
 const cases = (builder: ActionReducerMapBuilder<DashboardModels.Dashboard>) => {
   builder.addCase(ProductActions.clearError409, (state: any, action) => {

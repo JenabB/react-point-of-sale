@@ -1,8 +1,8 @@
 import { Button, Modal, Space, Input, Select, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../../common/state/hooks";
-import { ShopActions, ShopSelectors, ShopModels } from "../";
+import { useAppDispatch, useAppSelector } from "common/state/hooks";
+import { ShopActions, ShopSelectors, ShopModels } from "modules/shop";
 import Shop from "../Shop";
 
 interface Props {

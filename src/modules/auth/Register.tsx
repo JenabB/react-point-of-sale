@@ -5,12 +5,13 @@ import {
   PhoneOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography, Space } from "antd";
+import { Checkbox, Form, Typography, Space } from "antd";
 import { useFormik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
-import { AuthAction, AuthSelectors } from ".";
-import { Loader, AlertMessage } from "../../common/components";
 import { useNavigate, Link } from "react-router-dom";
+import { Input, Button } from "common/components/custom";
+import { useAppDispatch, useAppSelector } from "common/state/hooks";
+import { AuthAction, AuthSelectors } from ".";
+import { Loader, AlertMessage } from "common/components";
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -44,13 +45,14 @@ const Register = () => {
       <AlertMessage message={register.message} error={register.error} />
       <Loader show={isLoading} />
       <div className="auth-form-container">
-        <Title level={5}>Create an account</Title>
+        <Title level={2}>Welcome!</Title>
         <Form initialValues={{ remember: true }} onFinish={formik.handleSubmit}>
           <Form.Item
             name="fullName"
             rules={[{ required: true, message: "Please input your Username!" }]}
           >
             <Input
+              type="text"
               value={formik.values.fullName}
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Full Name"
@@ -64,6 +66,7 @@ const Register = () => {
             ]}
           >
             <Input
+              type="number"
               value={formik.values.contactNumber}
               prefix={<PhoneOutlined className="site-form-item-icon" />}
               placeholder="Contact Number"
@@ -106,13 +109,7 @@ const Register = () => {
 
           <Form.Item>
             <Space>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Sign Up
-              </Button>
+              <Button type="primary" htmlType="submit" text="Sign Up" />
               Or <Link to="/login">Sign In</Link>
             </Space>
           </Form.Item>

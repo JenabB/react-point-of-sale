@@ -1,5 +1,5 @@
-import { Spin } from "antd";
 import React from "react";
+import { Spin } from "antd";
 
 interface Props {
   show?: boolean;

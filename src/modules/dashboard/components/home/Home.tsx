@@ -6,10 +6,10 @@ import {
   HomeOutlined,
   PhoneOutlined,
 } from "@ant-design/icons";
-import { useAppDispatch, useAppSelector } from "../../../../common/state/hooks";
-import { DashboardSelectors } from "../..";
-import { AreaActions } from "../../action";
-import ShopCreateModal from "../../../shop/components/ShopCreateModal";
+import { useAppDispatch, useAppSelector } from "common/state/hooks";
+import { DashboardSelectors } from "modules/dashboard";
+import { AreaActions } from "modules/dashboard/action";
+import ShopCreateModal from "modules/shop/components/ShopCreateModal";
 import InvoiceInfo from "./InvoiceInfo";
 import ProductInfo from "./ProductInfo";
 

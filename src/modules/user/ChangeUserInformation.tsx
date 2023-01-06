@@ -3,11 +3,11 @@ import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Alert, Form, Input, Typography, Space, Layout } from "antd";
 import { useFormik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
+import { useAppDispatch, useAppSelector } from "common/state/hooks";
 // import { AuthAction, AuthSelectors } from ".";
-import { Loader, AlertMessage } from "../../common/components";
-import { UserActions } from "../dashboard/action";
-import { DashboardSelectors } from "../dashboard";
+import { Loader, AlertMessage } from "common/components";
+import { UserActions } from "modules/dashboard/action";
+import { DashboardSelectors } from "modules/dashboard";
 
 const ChangeUserInformation = () => {
   const [isError, setIsError] = useState(false);

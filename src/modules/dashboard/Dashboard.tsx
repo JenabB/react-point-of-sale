@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
-import { DashboardActions, DashboardSelectors } from ".";
-import { Loader } from "../../common/components";
+import { useAppDispatch, useAppSelector } from "common/state/hooks";
+import { DashboardActions, DashboardSelectors } from "modules/dashboard";
+import { Loader } from "common/components";
 import SideMenu from "./components/SideMenu";
 import Header from "./components/Header";
 import DashboardContent from "./components/DashboardContent";

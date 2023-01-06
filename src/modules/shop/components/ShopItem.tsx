@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Card } from "antd";
-import { ShopModels } from "../";
+import { ShopModels } from "modules/shop";
 import { Link } from "react-router-dom";
 
 interface Props {

@@ -3,7 +3,7 @@ import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Alert, Form, Input, Typography, Space, Layout } from "antd";
 import { useFormik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
+import { useAppDispatch, useAppSelector } from "common/state/hooks";
 // import { AuthAction, AuthSelectors } from ".";
 import { Loader, AlertMessage } from "../../common/components";
 

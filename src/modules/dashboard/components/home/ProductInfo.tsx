@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Card, Col, Row, Statistic } from "antd";
 import { ArrowUpOutlined } from "@ant-design/icons";
-import { useAppSelector } from "../../../../common/state/hooks";
-import { DashboardSelectors } from "../..";
-import { kFormat } from "../../../../common/utils";
+import { useAppSelector } from "common/state/hooks";
+import { DashboardSelectors } from "modules/dashboard";
+import { kFormat } from "common/utils";
 
 const ProductInfo = () => {
   const { data } = useAppSelector(DashboardSelectors.selectProducts);

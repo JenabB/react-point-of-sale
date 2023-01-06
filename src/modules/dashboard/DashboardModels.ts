@@ -1,5 +1,5 @@
 import { Dashboard } from ".";
-import { ShopModels } from "../shop";
+import { ShopModels } from "modules/shop";
 
 export interface RequestModel {
   isLoading: boolean;

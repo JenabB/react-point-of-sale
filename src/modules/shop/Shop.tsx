@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../common/state/hooks";
-import { ShopActions, ShopSelectors } from ".";
+import { useAppDispatch, useAppSelector } from "common/state/hooks";
+import { ShopActions, ShopSelectors } from "modules/shop";
 
 import ShopSkeleton from "./components/ShopSkeleton";
 import ShopList from "./components/ShopList";
